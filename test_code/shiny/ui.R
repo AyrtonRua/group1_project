@@ -12,19 +12,19 @@ sidebar <- dashboardSidebar(
   
   helpText("Create an interactive tourist friendly city hot-spot guide."),
   
-  actionButton("go!", "Go!"),
+  submitButton(text = "Let's go!" ),
   textInput(inputId= "choosecity", label="Choose a city",placeholder="London maybe?!"),
   
-  # Copy the line below to make a checkbox
-  checkboxInput("Restaurant", label = "Restaurant", value = FALSE),
+  # checkboxes
+  checkboxInput(inputId= "Restaurant", label = "Restaurant", value = FALSE),
   
-  checkboxInput("Hotel", label = "Hotel", value = FALSE),
+  checkboxInput(inputId= "Hotel", label = "Hotel", value = FALSE),
   
-  checkboxInput("Nightlife", label = "Nightlife", value = FALSE),
+  checkboxInput(inputId= "Nightlife", label = "Nightlife", value = FALSE),
   
-  checkboxInput("Parcs", label = "Parcs and attractions", value = FALSE),
+  checkboxInput(inputId= "Parcs", label = "Parcs and attractions", value = FALSE),
   
-  checkboxInput("Surprise", label = "Surprise me!", value = FALSE)   
+  checkboxInput(inputId= "Surprise", label = "Surprise me!", value = FALSE)   
   
   
   )
@@ -46,10 +46,13 @@ body <- dashboardBody(
 
 
 
-ui <- dashboardPage(header, sidebar, body)
+ui <-  shinyUI(
+  
+  
+  dashboardPage(header, sidebar, body,skin="red")
 
   
-  
+)
   
   
   

@@ -1,14 +1,15 @@
 
 
 
-server <- function(input,output, session){
+server <-
   
+  shinyServer(
   
-
+  function(input,output, session){
+  
   
   
   data <- reactive({
-    
     df <- geocode(location =
                     
                     
@@ -22,21 +23,24 @@ server <- function(input,output, session){
                   
                   source = "dsk") %>% as.data.frame() %>% rename("long" =lon)
     
-   
-    
-    
-    
-  
-    
   })
+  
+  
+  
+  
+  
+  
+
+  
   
   output$mymap <- renderLeaflet({
     df <- data()
     
+
     m <- leaflet(data = df) %>%
       
     
-      setView(lng = df$long, lat = df$lat, zoom = 09)  %>%
+      setView(lng = df$long, lat = df$lat, zoom = 12)  %>%
       
     #  addProviderTiles(provider=) %>%   choose one provide so map looks nice
       #check https://stackoverflow.com/questions/37996143/r-leaflet-zoom-control-level those styles
@@ -57,6 +61,7 @@ server <- function(input,output, session){
   
 }
 
+)
 
 
 
