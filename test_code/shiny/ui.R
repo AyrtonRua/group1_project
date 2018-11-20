@@ -1,42 +1,68 @@
 
 
 
-ui <- fluidPage(
-  
-  theme = shinytheme("united"), 
-  
-  titlePanel("Welcome to touristR dear traveller!"),
-  
-  
-  #https://shiny.rstudio.com/articles/layout-guide.html
-  sidebarLayout(position = "left",
-    
-    sidebarPanel(
-      
-      
 
-    
+
+header <- dashboardHeader(title="Welcome to touristR dear traveller!",titleWidth=350)
+
+
+
+sidebar <- dashboardSidebar( 
+  
+  
+  helpText("Create an interactive tourist friendly city hot-spot guide."),
+  
   actionButton("go!", "Go!"),
   textInput(inputId= "choosecity", label="Choose a city",placeholder="London maybe?!"),
-            
+  
   # Copy the line below to make a checkbox
-  checkboxInput("checkbox", label = "Restaurant", value = FALSE),
+  checkboxInput("Restaurant", label = "Restaurant", value = FALSE),
   
-  checkboxInput("checkbox", label = "Hotel", value = FALSE),
+  checkboxInput("Hotel", label = "Hotel", value = FALSE),
   
-  checkboxInput("checkbox", label = "Nightlife", value = FALSE),
+  checkboxInput("Nightlife", label = "Nightlife", value = FALSE),
   
-  checkboxInput("checkbox", label = "Parcs and attractions", value = FALSE),
+  checkboxInput("Parcs", label = "Parcs and attractions", value = FALSE),
   
-  checkboxInput("checkbox", label = "Surprise me!", value = FALSE)  ,width = 4
+  checkboxInput("Surprise", label = "Surprise me!", value = FALSE)   
   
-            ) ,
- 
-  
-  mainPanel  (  leafletOutput("mymap",height = 720), width = 8  )
   
   )
+
+
+
+
+
+body <- dashboardBody(
   
   
-  ) 
+  leafletOutput("mymap",height = 700) 
+  
+  
+)
+
+
+
+
+
+
+ui <- dashboardPage(header, sidebar, body)
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
 

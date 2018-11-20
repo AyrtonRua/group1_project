@@ -26,8 +26,7 @@ server <- function(input,output, session){
     
     
     
-    
-     
+  
     
   })
   
@@ -35,6 +34,8 @@ server <- function(input,output, session){
     df <- data()
     
     m <- leaflet(data = df) %>%
+      
+    
       setView(lng = df$long, lat = df$lat, zoom = 09)  %>%
       
     #  addProviderTiles(provider=) %>%   choose one provide so map looks nice
