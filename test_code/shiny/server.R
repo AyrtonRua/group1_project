@@ -10,12 +10,24 @@ server <- function(input,output, session){
   data <- reactive({
     
     df <- geocode(location =
+                    
+                    
+                    #goal here would be user inputs the city
+                    #then we run a search to obtain the latitude and longitude
+                    #make it a datraframe df like bellow which is used to make the map
+                    
+                    
                     #uses the city inputted by the user as input to obtain latitude and longitude to obtain map
                     input$choosecity ,
                   
                   source = "dsk") %>% as.data.frame() %>% rename("long" =lon)
     
+   
     
+    
+    
+    
+     
     
   })
   
@@ -34,7 +46,8 @@ server <- function(input,output, session){
                  lat = ~lat,
                  popup = paste("Name", df$name, "<br>",
                                "Language:", df$language))
-    m
+   
+     m
   })
   
   

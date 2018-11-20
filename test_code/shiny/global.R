@@ -20,5 +20,8 @@ library(tidyverse)
 library(ggmap)
 
 
+library(twitteR)
 
+
+library(shinythemes)
 
