@@ -23,5 +23,4 @@ library(ggmap)
 library(twitteR)
 
 
-library(shinythemes)
 
