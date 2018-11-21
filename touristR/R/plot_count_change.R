@@ -3,7 +3,7 @@
 
 
 
-track_keyword <- function(keyword) {
+track_keyword <- function(keyword, number,  since.last ) {
 
 
 
@@ -29,11 +29,16 @@ track_keyword <- function(keyword) {
 
 
 
+#run query for all data per  month going from past 6 month until today
+input <- paste("#", keyword, sep = "")
 
-  #run query for all data per  month going from past 6 month until today
 
-  input <- paste("#", keyword, sep = "")
+#adapting data input
+dateformat <-    lubridate::ymd(Sys.Date())    -
 
+
+
+  paste("#", keyword, sep = "")
 
   #quer Twitter using the keyword input
  results_twitter <-   twitteR::searchTwitter(
