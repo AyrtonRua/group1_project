@@ -1,9 +1,9 @@
 
+#to be removed
+library(magrittr)
 
 
-
-
-track_keyword <- function(keyword, number,  since.last ) {
+track_keyword <- function(keyword, number,  sincetype ) {
 
 
 
@@ -29,38 +29,74 @@ track_keyword <- function(keyword, number,  since.last ) {
 
 
 
-#run query for all data per  month going from past 6 month until today
+#saving the result of the function
+sinceInput <- vector(mode = "character", length = 2L)
+#adapting date (since) input
+
+ if(sincetype=="days") {
+
+  sinceInput[1] <-  ( lubridate::today(tzone=Sys.timezone()) - lubridate::days(number) ) %>% lubridate::ymd() %>% as.character()
+
+  sinceInput[2] <-"days"
+
+} else if(sincetype=="weeks") {
+
+
+  sinceInput[1] <- ( lubridate::today(tzone=Sys.timezone()) -  lubridate::weeks(number) ) %>% lubridate::ymd() %>% as.character()
+
+  sinceInput[2] <-"weeks"
+
+
+}else if(sincetype=="months") {
+
+
+
+#time difference in months (respecting e.g. months with 30 and 31 days)
+  sinceInput[1] <-  (  lubridate::today(tzone=Sys.timezone())   -  lubridate::months(number) ) %>% lubridate::ymd() %>% as.character()
+
+  sinceInput[2] <-"months"
+
+
+}else if(sincetype=="years") {
+
+  sinceInput[1] <-  (  lubridate::today(tzone=Sys.timezone())   -   lubridate::years(number) ) %>% lubridate::ymd() %>% as.character()
+
+  sinceInput[2] <-"years"
+
+
+}
+
+
+#run query for all data per  month going from past 6 months until today
 input <- paste("#", keyword, sep = "")
 
-
-#adapting data input
-dateformat <-    lubridate::ymd(Sys.Date())    -
-
-
-
-  paste("#", keyword, sep = "")
 
   #quer Twitter using the keyword input
  results_twitter <-   twitteR::searchTwitter(
      input ,
-     n = 10,
-     lang = "en"  ,
+     n = 1000,
      resultType = "mixed",
-     since = as.character ((lubridate::ymd(Sys.Date())  - 30))   ,
-     until = as.character (lubridate::ymd(Sys.Date())),
+     since =   sinceInput[1]  ,
+     until = lubridate::today(tzone=Sys.timezone()) %>% lubridate::ymd() %>% as.character()  ,
+
+
 
     #specifying the geocode to be sure we only obtain e.g. indeed
     #the results published from Paris for search query Paris (tweet should
     #be made within a radius of 40 miles from Paris maximum)
 
-    geocode = paste(df$lat, df$long, "40mi", sep = ",")
-
-                    )
+    geocode = paste(df$lat, df$long, "40mi", sep = ",")   )
 
 
 
   #saving search query results in a dataframe
   results_tweetdata <-  twitteR::twListToDF(results_twitter)%>% tibble::as.tibble()
+
+
+
+#creating the plot of keyword count per day over time (measure of popularity)
+
+if(sincetype=="days"| sincetype=="weeks" ) {
 
 
   #correct date format and keep it with seconds to have a very specific
@@ -72,15 +108,73 @@ dateformat <-    lubridate::ymd(Sys.Date())    -
 
   #a resaonable time frame to aggregate results is hours in that sense
 
-  results_tweetdata$created <- lubridate::ymd_hms(results_tweetdata$created,
+results_tweetdata$created <- lubridate::ymd_hms(results_tweetdata$created,
                                                   tz=Sys.timezone(),
                                                   quiet=TRUE) %>% lubridate::round_date(unit="hour")
 
 
 
+#plot
+
+print(
+
+  results_tweetdata %>%
+
+dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count=n) %>%
+
+  ggplot2::ggplot() +
+
+  ggplot2::geom_line(mapping = ggplot2::aes(x=created, count),  size = 2, alpha = 0.8)+
 
 
-#creating the plot of keyword count per day over time (measure of popularity)
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8),labels = scales::number_format(accuracy = 1) ) +
+  ggplot2::labs(title="Twitter keyword popularity tracking",
+
+      subtitle =paste("Data fetched from",   sinceInput[1]  ,"until", lubridate::today() %>% lubridate::ymd() %>% as.character() ,  sep=" "),
+      x = "Days", y = "Number of tweets posted")
+
+
+)
+
+
+} else if(sincetype=="months"| sincetype== "years") {
+
+
+
+  results_tweetdata$created <- lubridate::ymd_hms(results_tweetdata$created,
+                                                  tz=Sys.timezone(),
+                                                  quiet=TRUE) %>% lubridate::ymd()
+
+
+
+  print(
+
+    results_tweetdata %>%  dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count=n) %>%
+
+  ggplot2::ggplot() +
+
+    ggplot2::geom_line(mapping = ggplot2::aes(x=created, count),  size = 2, alpha = 0.8)+
+
+
+    ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(8),labels = scales::number_format(accuracy = 1) ) +
+    ggplot2::labs(title="Twitter keyword popularity tracking",
+
+         subtitle =paste("Data fetched from",   sinceInput[1]  ,"until", lubridate::today() %>% lubridate::ymd() %>% as.character() ,  sep=" "),
+         x = "Days", y = "Number of tweets posted")
+
+
+)
+
+#for longer timeframe we aggregate data daily to smooth the variations of the dataset
+
+
+
+}
+
+
+
+
+
 
 
 
@@ -95,15 +189,10 @@ dateformat <-    lubridate::ymd(Sys.Date())    -
 
 
 #example
-result <- track_keyword(keyword = "bern")
+result <- track_keyword(keyword = "paris",number = 9,sincetype = "weeks")
 
 
-#getting the count of tweets for each day
-result %>%  dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>%
 
-  ggplot2::ggplot() +
-#
-  ggplot2::geom_line(mapping = ggplot2::aes(x=created, n),  size = 2, alpha = .8)
 
 
 #https://drsimonj.svbtle.com/label-line-ends-in-time-series-with-ggplot2
