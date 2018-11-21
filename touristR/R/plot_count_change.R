@@ -17,9 +17,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 
 
-
-
-  #obtain latitude and longitude of the input city/keyword
+  #obtain latitude and longitude of the input city/cityName
   #and make a dataframe from it city lat and long
   df <- ggmap::geocode(location =
                          keyword ,
@@ -61,9 +59,11 @@ track_keyword <- function(keyword, number,  sincetype) {
 
   }
 
-
-  #run query for all data per  month going from past 6 months until today
-  input <- paste("#", keyword, sep = "")
+  #run query for that keyword (format is #... without any space)
+  #first we remove any white space to obtain oneword input
+  keyword_input <- gsub(keyword, pattern = " ",replacement = "")
+  #then we obtain the #oneword format to be used as input for the Twitter query
+  input <- paste("#", keyword_input, sep = "")
 
 
   #quer Twitter using the keyword input
@@ -141,7 +141,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
               caption = paste(
 
-                                "Note: Hourly data fetched from",
+                                "Note: Hourly data (UTC time) fetched from",
 
                                format(as.Date(sinceInput[1]), "%A, %d-%b. %Y")
                                ,
@@ -168,7 +168,8 @@ track_keyword <- function(keyword, number,  sincetype) {
 
           )
 
-        } else if(sincetype == "weeks" && number < 3) {
+        } else
+          if(sincetype == "weeks" && number < 3) {
     #correct date format and keep it with seconds to have a very specific
     #time precision level e.g. to be used during marketing campaigns
     #to identify the time slots where users post the most about a given keywork
@@ -218,7 +219,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
           caption = paste(
 
-            "Note: Hourly data fetched from",
+            "Note: Hourly data (UTC time) fetched from",
 
             format(as.Date(sinceInput[1]), "%A, %d-%b. %Y")
             ,
@@ -244,6 +245,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 
     )
+
 
 
 
@@ -294,7 +296,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
           caption = paste(
 
-            "Note: Daily data fetched from",
+            "Note: Daily data (UTC time) fetched from",
 
             format(as.Date(sinceInput[1]), "%A, %d-%b. %Y")
             ,
@@ -344,9 +346,13 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 #example
 result <-
-  track_keyword(keyword = "paris",
-                number = 3,
+  track_keyword(keyword  = "new york",
+                number = 1,
                 sincetype = "weeks")
 
+#TO be added to function description file!
 
+#keyword can be any keyword input including having spaces e.g. "stadium san siro"!
+#number any number
+#sincetype either days, weeks, months, or years
 
