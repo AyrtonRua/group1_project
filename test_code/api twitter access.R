@@ -3,10 +3,11 @@
 
 library(twitteR)
 
-consumer_key <- 'ugjqg8RGNvuTAL1fEiNtw'
-consumer_secret <- '4WjuEbP6QLUN2DwDzyTwmdMES6fgnOsS65fWxpT8I'
-access_token <- '76887198-JA3xCVO1vvQMqMDiIobWKKGQxYKSB0CV2lI2PZ7GL'
-access_secret <- 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
+consumer_key <- 'L5OKQvggKlNEHlRmTJX6pW7iK'
+consumer_secret <- 'TLrIDRv3MbA8BETX2bF0qbOcQzh8OpRZPDAQCmBdMtJ3aUOZef'
+access_token <- '1062258817499652096-egjP6aqFRnwbIl0sVDzjvWJTeI1SKQ'
+access_secret <- 'dI3k2NmkfNu7gWaiVODEgVOwlnYFhC4KSGyTgSchsG92P'
 setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
 
 tweets_g <- searchTwitter("#google", n=10,lang = "en")
+tweets_g
