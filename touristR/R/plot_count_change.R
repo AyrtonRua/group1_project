@@ -3,8 +3,12 @@
 #to be removed
 library(magrittr)
 
+keyword <-  c("paris", "milano", "london")
+
+  number <-2
 
 
+  sincetype <-"weeks"
 
 track_keyword <- function(keyword, number,  sincetype) {
   #accessing Twitter via API
@@ -16,14 +20,32 @@ track_keyword <- function(keyword, number,  sincetype) {
   twitteR::setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
 
 
+#keyword is a vector allowing to compare multiple places as a tourist
+  # e.g. keyword <- c("paris", "milano", "london")
 
   #obtain latitude and longitude of the input city/cityName
-  #and make a dataframe from it city lat and long
-  df <- ggmap::geocode(location =
-                         keyword ,
+  #and make a dataframe from its city lat and long
+
+
+#obtaining latitude and longitude for each place
+  df <- data.frame(city=NA, long=NA,lat=NA)
+
+for (i in 1:length(keyword)) {
+
+  df[i,1] <-  keyword[i]
+
+  df[i,2:3] <- ggmap::geocode(location =
+                         keyword[i] ,
                        source = "dsk",
-                       messaging = FALSE) %>% tibble::as.tibble() %>% dplyr::rename("long" = lon) %>%
-    dplyr::mutate(city = keyword) %>% dplyr::select(city, long, lat)
+                       messaging = FALSE)
+
+}
+
+
+
+
+
+
 
 
 
@@ -59,32 +81,72 @@ track_keyword <- function(keyword, number,  sincetype) {
 
   }
 
-  #run query for that keyword (format is #... without any space)
-  #first we remove any white space to obtain oneword input
-  keyword_input <- gsub(keyword, pattern = " ",replacement = "")
-  #then we obtain the #oneword format to be used as input for the Twitter query
-  input <- paste("#", keyword_input, sep = "")
 
 
-  #quer Twitter using the keyword input
-  results_twitter <-   twitteR::searchTwitter(
-    input ,
-    n = 1000,
-    resultType = "mixed",
-    since =   sinceInput[1]  ,
-    until = lubridate::today(tzone = Sys.timezone()) %>% lubridate::ymd() %>% as.character()  ,
+#saving results of foor loop bellow
+  keyword_input <-vector(mode = "character", length = length(keyword)) #remove white space
+  input <-vector(mode = "character", length = length(keyword)) #adding #
 
-    #specifying the geocode to be sure we only obtain e.g. indeed
-    #the results published from Paris for search query Paris (tweet should
-    #be made within a radius of 40 miles from Paris maximum)
 
-    geocode = paste(df$lat, df$long, "40mi", sep = ",")     )
+results_twitter = list()  # saving result in a list
 
+
+
+
+#loop query on Twitter
+  for (i in 1:length(keyword)) {
+    #run query for that keyword (format is #... without any space)
+    #first we remove any white space to obtain oneword input
+    keyword_input[i] <-
+      gsub(keyword[i], pattern = " ", replacement = "")
+    #then we obtain the #oneword format to be used as input for the Twitter query
+    input[i] <- paste("#", keyword_input[i], sep = "")
+
+
+
+
+    #number of tweeets per keyword obtained
+    n=10
+    #query Twitter using the keyword input
+    results_twitter[[i]] <-   twitteR::searchTwitter(
+      input[i] ,
+      n = n,
+      resultType = "mixed",
+      since =   sinceInput[1]  ,
+      until = lubridate::today(tzone = Sys.timezone()) %>% lubridate::ymd() %>% as.character()  ,
+
+      #specifying the geocode to be sure we only obtain e.g. indeed
+      #the results published from Paris for search query Paris (tweet should
+      #be made within a radius of 40 miles from Paris maximum)
+
+      geocode = paste(df[i, ]$lat, df[i, ]$long, "40mi", sep = ",")
+
+
+    )
+
+
+
+}
 
 
   #saving search query results in a dataframe
   results_tweetdata <-
-    twitteR::twListToDF(results_twitter) %>% tibble::as.tibble()
+    twitteR::twListToDF(results_twitter %>% unlist()) %>% tibble::as.tibble()
+
+
+#PROBLEM FROM HERE TO GET KEYWORD NAME
+
+
+
+#PROBLEM FROM HERE TO GET KEYWORD NAME
+
+
+
+
+
+
+
+
 
 
 
@@ -116,7 +178,7 @@ track_keyword <- function(keyword, number,  sincetype) {
           print(
             results_tweetdata %>%
 
-            dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
+            dplyr::group_by(city, created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
                                                                                                n) %>%
 
             ggplot2::ggplot() +
@@ -193,7 +255,7 @@ track_keyword <- function(keyword, number,  sincetype) {
     print(
       results_tweetdata %>%
 
-        dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
+        dplyr::group_by(city, created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
                                                                                              n) %>%
 
         ggplot2::ggplot() +
@@ -258,7 +320,8 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 
 
-    } else  {
+    }
+  else  {
 
 
 
@@ -270,7 +333,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 
     print(
-      results_tweetdata %>%  dplyr::group_by(created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
+      results_tweetdata %>%  dplyr::group_by(city,created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
                                                                                                                   n) %>%
 
         ggplot2::ggplot() +
@@ -334,7 +397,7 @@ track_keyword <- function(keyword, number,  sincetype) {
 
 
 
-  #return dataframe results
+  #return dataframe results as well
   return(results_tweetdata)
 
 
@@ -344,15 +407,15 @@ track_keyword <- function(keyword, number,  sincetype) {
 #then input this into the twitter search page
 
 
-#example
+#example to be removed at the end =>keep only function and #' (document it ) in this file
 result <-
-  track_keyword(keyword  = "new york",
+  track_keyword(keyword  = c("new york","milano", "sidney"),
                 number = 1,
                 sincetype = "weeks")
 
 #TO be added to function description file!
 
-#keyword can be any keyword input including having spaces e.g. "stadium san siro"!
+#keyword can be any keyword of a you place you would like to visit / input including having spaces e.g. "stadium san siro"
 #number any number
 #sincetype either days, weeks, months, or years
 

@@ -13,7 +13,7 @@ server <-
 
 
   data <- reactive({
-    df <- geocode(location =
+    df <- ggmap::geocode(location =
 
 
                     #goal here would be user inputs the city
@@ -24,7 +24,7 @@ server <-
                     #uses the city inputted by the user as input to obtain latitude and longitude to obtain map
                     input$choosecity ,
 
-                  source = "dsk") %>% as.data.frame() %>% rename("long" =lon)
+                  source = "dsk") %>% as.data.frame() %>% dplyr::rename("long" =lon)
 
   })
 
@@ -36,11 +36,11 @@ server <-
 
 
 
-  output$mymap <- renderLeaflet({
+  output$mymap <- leaflet::renderLeaflet({
     df <- data()
 
 
-    m <- leaflet(data = df) %>%
+    m <- leaflet::leaflet(data = df) %>%
 
 
       setView(lng = df$long, lat = df$lat, zoom = 12)  %>%
@@ -66,6 +66,8 @@ server <-
 
 )
 
+#keep the #'
+#devtools::document()
 
 
 
