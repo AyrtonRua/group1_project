@@ -3,7 +3,7 @@
 #to be removed
 library(magrittr)
 
-keyword <-  c("paris", "milano", "london")
+keyword <-  c("Paris", "Milano", "London")
 
   number <-2
 
@@ -11,6 +11,14 @@ keyword <-  c("paris", "milano", "london")
   sincetype <-"weeks"
 
 track_keyword <- function(keyword, number,  sincetype) {
+
+
+
+  if(length(keyword)> 4) {
+
+    stop("Please input maximum 4 keywords!")
+
+} else{
   #accessing Twitter via API
   consumer_key <- 'ugjqg8RGNvuTAL1fEiNtw'
   consumer_secret <- '4WjuEbP6QLUN2DwDzyTwmdMES6fgnOsS65fWxpT8I'
@@ -83,14 +91,15 @@ for (i in 1:length(keyword)) {
 
 
 
-#saving results of foor loop bellow
+#saving results of for loop bellow
   keyword_input <-vector(mode = "character", length = length(keyword)) #remove white space
   input <-vector(mode = "character", length = length(keyword)) #adding #
 
 
 results_twitter = list()  # saving result in a list
 
-
+#number of tweeets per keyword obtained
+n=1000
 
 
 #loop query on Twitter
@@ -105,8 +114,6 @@ results_twitter = list()  # saving result in a list
 
 
 
-    #number of tweeets per keyword obtained
-    n=10
     #query Twitter using the keyword input
     results_twitter[[i]] <-   twitteR::searchTwitter(
       input[i] ,
@@ -123,20 +130,72 @@ results_twitter = list()  # saving result in a list
 
 
     )
+    #saving search query results in a dataframe each one for 1 city
 
+  }
+if(length(keyword)==4) {
+
+  results_twitter1 <-     results_twitter[[1]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[1])
+
+  results_twitter2 <-     results_twitter[[2]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[2])
+
+  results_twitter3 <-     results_twitter[[3]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[3])
+
+  results_twitter4 <-     results_twitter[[4]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[4])
+
+
+  finaldata <- rbind(results_twitter1,results_twitter2,results_twitter3,results_twitter4 )
+
+
+} else if(length(keyword)==3 ) {
+
+  results_twitter1 <-     results_twitter[[1]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[1])
+
+  results_twitter2 <-     results_twitter[[2]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[2])
+
+  results_twitter3 <-     results_twitter[[3]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[3])
+
+
+  finaldata <- rbind(results_twitter1,results_twitter2,results_twitter3 )
+
+} else if(length(keyword)==2) {
+
+  results_twitter1 <-     results_twitter[[1]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[1])
+
+  results_twitter2 <-     results_twitter[[2]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[2])
+
+
+  finaldata <- rbind(results_twitter1,results_twitter2 )
+
+
+} else if(length(keyword)==1  ) {
+
+
+  results_twitter1 <-     results_twitter[[1]] %>% unlist()  %>% twitteR::twListToDF() %>% tibble::as.tibble() %>%
+    dplyr::mutate(city=keyword[1])
+
+
+  finaldata <- results_twitter1
 
 
 }
 
 
-  #saving search query results in a dataframe
-  results_tweetdata <-
-    twitteR::twListToDF(results_twitter %>% unlist()) %>% tibble::as.tibble()
+
+
+
 
 
 #PROBLEM FROM HERE TO GET KEYWORD NAME
-
-
 
 #PROBLEM FROM HERE TO GET KEYWORD NAME
 
@@ -164,8 +223,9 @@ results_twitter = list()  # saving result in a list
 
           #a resaonable time frame to aggregate results is hours in that sense
 
-          results_tweetdata$created <-
-            lubridate::ymd_hms(results_tweetdata$created,
+
+    finaldata$created <-
+            lubridate::ymd_hms(finaldata$created,
                                tz = Sys.timezone(),
                                quiet = TRUE) %>%
             lubridate::round_date(unit =  "hour")
@@ -176,30 +236,30 @@ results_twitter = list()  # saving result in a list
 
 
           print(
-            results_tweetdata %>%
+            finaldata %>%
 
             dplyr::group_by(city, created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
                                                                                                n) %>%
 
             ggplot2::ggplot() +
 
-            ggplot2::geom_line(
-              mapping = ggplot2::aes(x = created, count),
-              size = 1,
-              alpha = 1
+              ggplot2::geom_point(
+                mapping = ggplot2::aes(x = created, count , color=city),
+              size = 3,
+              alpha = 0.8
             ) +
+              ggplot2::geom_line(  ggplot2::aes(x = created, count , color=city),size=0.5  )   +
+
 
 
             ggplot2::scale_y_continuous(
               breaks = scales::pretty_breaks(8),
               labels = scales::number_format(accuracy = 1)
             ) +
+
+
             ggplot2::labs(
-              title =  paste(
-                paste("Twitter #", keyword, sep = ""),
-                "popularity tracking"   ,
-                sep = " "
-              ),
+              title = "Twitter keyword popularity tracking",
 
               caption = paste(
 
@@ -224,11 +284,16 @@ results_twitter = list()  # saving result in a list
                 plot.title = ggplot2::element_text(size = 14,face = "bold"),
                 axis.text.x = ggplot2::element_text(size=8),axis.text.y = ggplot2::element_text(size=8)
               ) +
-              ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm"))
+              ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
+              viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
+              ggplot2::guides(color= ggplot2::guide_legend(title="#"))
 
 
 
-          )
+)
+
+
+
 
         } else
           if(sincetype == "weeks" && number < 3) {
@@ -241,8 +306,8 @@ results_twitter = list()  # saving result in a list
 
     #a resaonable time frame to aggregate results is hours in that sense
 
-    results_tweetdata$created <-
-    lubridate::ymd_hms(results_tweetdata$created,
+            finaldata$created <-
+    lubridate::ymd_hms(finaldata$created,
                          tz = Sys.timezone(),
                          quiet = TRUE) %>%
       lubridate::round_date(unit =  "hour")
@@ -253,31 +318,29 @@ results_twitter = list()  # saving result in a list
 
 
     print(
-      results_tweetdata %>%
+      finaldata %>%
 
         dplyr::group_by(city, created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
-                                                                                             n) %>%
+                                                                                                   n) %>%
 
         ggplot2::ggplot() +
 
-        ggplot2::geom_line(
-          mapping = ggplot2::aes(x = created, count),
-          size = 2,
+        ggplot2::geom_point(
+          mapping = ggplot2::aes(x = created, count , color=city),
+          size = 3,
           alpha = 0.8
         ) +
 
+        ggplot2::geom_line(  ggplot2::aes(x = created, count , color=city),size=0.5  )   +
 
         ggplot2::scale_y_continuous(
           breaks = scales::pretty_breaks(8),
           labels = scales::number_format(accuracy = 1)
         ) +
-        ggplot2::labs(
-          title =  paste(
-            paste("Twitter #", keyword, sep = ""),
-            "popularity tracking"   ,
-            sep = " "
-          ),
 
+
+        ggplot2::labs(
+          title = "Twitter keyword popularity tracking",
 
           caption = paste(
 
@@ -302,7 +365,10 @@ results_twitter = list()  # saving result in a list
           plot.title = ggplot2::element_text(size = 14,face = "bold"),
           axis.text.x = ggplot2::element_text(size=8),axis.text.y = ggplot2::element_text(size=8)
         ) +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm"))
+        ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
+        viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
+        ggplot2::guides(color= ggplot2::guide_legend(title="#"))
+
 
 
 
@@ -325,37 +391,37 @@ results_twitter = list()  # saving result in a list
 
 
 
-        results_tweetdata$created <-
-      lubridate::ymd_hms(results_tweetdata$created,
+    finaldata$created <-
+      lubridate::ymd_hms(finaldata$created,
                          tz = Sys.timezone(),
                          quiet = TRUE) %>% lubridate::as_date()
 
 
 
     print(
-      results_tweetdata %>%  dplyr::group_by(city,created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
-                                                                                                                  n) %>%
+      finaldata %>%
+
+        dplyr::group_by(city, created) %>% dplyr::count() %>% dplyr::arrange() %>% dplyr::rename(count =
+                                                                                                   n) %>%
 
         ggplot2::ggplot() +
 
-        ggplot2::geom_line(
-          mapping = ggplot2::aes(x = created, count),
-          size = 2,
+        ggplot2::geom_point(
+          mapping = ggplot2::aes(x = created, count , color=city),
+          size = 3,
           alpha = 0.8
         ) +
 
+        ggplot2::geom_line(  ggplot2::aes(x = created, count , color=city),size=0.5  )   +
 
         ggplot2::scale_y_continuous(
           breaks = scales::pretty_breaks(8),
           labels = scales::number_format(accuracy = 1)
         ) +
-        ggplot2::labs(
-          title =  paste(
-            paste("Twitter #", keyword, sep = "")     ,
-            "popularity tracking"   ,
-            sep = " "
-          )    ,
 
+
+        ggplot2::labs(
+          title = "Twitter keyword popularity tracking",
 
           caption = paste(
 
@@ -380,7 +446,10 @@ results_twitter = list()  # saving result in a list
           plot.title = ggplot2::element_text(size = 14,face = "bold"),
           axis.text.x = ggplot2::element_text(size=8),axis.text.y = ggplot2::element_text(size=8)
         ) +
-        ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm"))
+        ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
+        viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
+        ggplot2::guides(color= ggplot2::guide_legend(title="#"))
+
 
 
 
@@ -398,10 +467,14 @@ results_twitter = list()  # saving result in a list
 
 
   #return dataframe results as well
-  return(results_tweetdata)
+  return(finaldata)
 
 
 }
+
+
+}
+
 
 #needed to specify the geocode to avoid getting irrelevant content
 #then input this into the twitter search page
@@ -410,8 +483,8 @@ results_twitter = list()  # saving result in a list
 #example to be removed at the end =>keep only function and #' (document it ) in this file
 result <-
   track_keyword(keyword  = c("new york","milano", "sidney"),
-                number = 1,
-                sincetype = "weeks")
+                number = 2,
+                sincetype = "days")
 
 #TO be added to function description file!
 
