@@ -277,7 +277,7 @@ if(length(keyword)==4) {
         ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
         viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
         ggplot2::scale_x_datetime(labels = scales::date_format("%b %d - %H:%M"),
-                                  breaks=scales::date_breaks("7 hour"))+
+                                  breaks=scales::date_breaks("5 hour"))+
 
 
         ggrepel::geom_text_repel(
@@ -296,7 +296,7 @@ if(length(keyword)==4) {
                        count , label=factor(city))
           ,  fontface = 'bold', color = 'black',
           box.padding = 1, point.padding = 1,
-          segment.color = 'black' , size = 4)
+          segment.color = 'black' , size = 4) + ggplot2::guides(color=ggplot2::guide_legend(title="Place"))
 
 
 
@@ -388,7 +388,7 @@ finaldata$created_correct <- base::as.POSIXct(base::format(finaldata$created, "%
         ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
         viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
         ggplot2::scale_x_datetime(labels = scales::date_format("%b %d - %H:%M"),
-                                  breaks=scales::date_breaks("7 hour"))+
+                                  breaks=scales::date_breaks("5 hour"))+
 
 
         ggrepel::geom_text_repel(
@@ -407,7 +407,7 @@ finaldata$created_correct <- base::as.POSIXct(base::format(finaldata$created, "%
                       count , label=factor(city))
       ,  fontface = 'bold', color = 'black',
       box.padding = 1, point.padding = 1,
-      segment.color = 'black' , size = 4)
+      segment.color = 'black' , size = 4) + ggplot2::guides(color=ggplot2::guide_legend(title="Place"))
 
 
 
@@ -494,7 +494,7 @@ finaldata$created_correct <- base::as.POSIXct(base::format(finaldata$created, "%
         ggplot2::theme(plot.margin = ggplot2::unit(c(2,10,2,2), "mm")) +
         viridis::scale_color_viridis(discrete = TRUE , direction =  -1, alpha = 0.6) +
         ggplot2::scale_x_datetime(labels = scales::date_format("%b %d"),
-                                  breaks=scales::date_breaks("7 hour"))+
+                                  breaks=scales::date_breaks("5 hour"))+
 
 
         ggrepel::geom_text_repel(
@@ -513,7 +513,7 @@ finaldata$created_correct <- base::as.POSIXct(base::format(finaldata$created, "%
                        count , label=factor(city))
           ,  fontface = 'bold', color = 'black',
           box.padding = 1, point.padding = 1,
-          segment.color = 'black' , size = 4)
+          segment.color = 'black' , size = 4) + ggplot2::guides(color=ggplot2::guide_legend(title="Place"))
 
 
 
@@ -545,9 +545,9 @@ finaldata$created_correct <- base::as.POSIXct(base::format(finaldata$created, "%
 
 
 #example to be removed at the end =>keep only function and #' (document it ) in this file
-result <- track_keyword(keyword  = c("new york","london", "nike"),
+result <- track_keyword(keyword  = c("new york","london", "paris"),
                 number = 2,
-                sincetype = "months",
+                sincetype = "weeks",
                 provideN=100)
 
 #advised for  provideN bellow 1000 =>number of search results for each keyword
