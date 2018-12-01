@@ -1,7 +1,9 @@
 
-library(shiny)
-library(shinydashboard)
-library(leaflet)
+library("shiny")
+library("ptds2018hw4g1")
+library("magrittr")
+library("leaflet")
+
 
 
   shinyServer(

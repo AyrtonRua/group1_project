@@ -1,22 +1,35 @@
 Package: touristR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Package touristR
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Date: 2018-12-01
+Authors@R: c(
+    person("Ayrton", "Rua", email = "ayrton.gomesmartinsrua@unil.ch",
+    role = c("aut","cre")),
+    person("Maurizio", "Griffo", email = "maurizio.griffo@unil.ch",
+    role = "aut"),
+    person("Ali", "Karray", email="mohamedali.karray@unil.ch",
+    role = "aut"),
+    person("Mohit", "Mehrotra", email="mohit.mehrotra@unil.ch",
+    role = "aut"),
+    person("Youness", "Zarhloul", email="youness.zarhloul@unil.ch",
+    role = "aut")
+    )
+Maintainer: The package maintainer is Ayrton Rua <ayrton.gomesmartinsrua@unil.ch>
+Description: The provide an interactive Shiny map allowing providing the user (traveller) with useful and easy to access information about cities of interest, using Twitter and Tripadvisor data. It allows also to query Twitter to obtain information about the popularity of different keywords (e.g. London) over time.
+License: GNU General Public License
 Encoding: UTF-8
 LazyData: true
-Imports:
-    ggplot2,
-    tibble,
-    twitteR,
-    ggmap,
-    lubridate,
-    magrittr,
-    dplyr,
-    shiny,
-    shinydashboard
 RoxygenNote: 6.1.0
+Import:
+  ggplot2 (>= 3.0.0)
+  tibble (>= 1.4.2)
+  twitteR (>= 1.1.9)
+  ggmap (>= 2.6.1)
+  lubridate (>= 1.7.4)
+  magrittr (>= 1.5)
+  dplyr (>= 0.7.7)
+  shiny (>= 1.2.0)
+  leaflet (>= 2.0.2)
+Imports:
+    shiny (>= 1.2.0)

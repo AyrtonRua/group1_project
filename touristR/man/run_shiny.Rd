@@ -26,15 +26,14 @@ the requested city and places, fectches the top spots accordingly from
 Tripadvisor, and runs a Twitter count and sentiment analysis, to return
 an interactive plot, illustrating the most sought after places
 by Twitter users (i.e. by count and most liked places). \cr
- Informing thus the
-user (traveller) which are the top-spots to visits in consequence.
+The final aim is to display an interactive map of
+the top-spots to visits in any given city.
 }
 \examples{
 \dontrun{
 Choose a city = London,
 Choose a place = Monument
 }
-
 
 
 
