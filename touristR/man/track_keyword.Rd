@@ -59,7 +59,7 @@ An Introduction to Statistical Programming Methods with R.
 Retrieved from \url{https://smac-group.github.io/ds/}
 }
 \seealso{
-\code{\link{touristR}}
+\code{\link{touristR} & \link{run_shiny}}
 }
 \author{
 Ayrton Rua: \email{ayrton.gomesmartinsrua@unil.ch}

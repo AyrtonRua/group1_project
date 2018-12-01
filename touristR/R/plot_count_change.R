@@ -25,7 +25,7 @@
 #' An Introduction to Statistical Programming Methods with R.
 #' Retrieved from \url{https://smac-group.github.io/ds/}
 #'
-#' @seealso \code{\link{touristR}}
+#' @seealso \code{\link{touristR} & \link{run_shiny}}
 #'
 #' @examples \dontrun{track_keyword(
 #' keyword = c("eiffel tower", "san francisco", "london"),
