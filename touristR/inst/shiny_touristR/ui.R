@@ -1,79 +1,138 @@
 
-ui <- shinyUI(navbarPage( title= "Welcome to touristR!", id="nav",
-
-                        tabPanel("Interactive map",
-
-                        leaflet::leafletOutput("mymap",height = 700),
 
 
-                                 absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                                               draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
-                                               width = 330, height = "auto",
+ui <- shinyUI(navbarPage(position="static-top",
+  title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
+  id = "nav",
+
+  tabPanel(
+    "Interactive map",
 
 
-                                               h2("Interactive parameters"),
+    div(class="outer",
 
 
-                                               shiny::helpText( "Create an interactive tourist friendly city hot-spot guide using Twitter data.")  ,
-
-                                               # Input choose city
-                                               shiny::textInput(inputId= "choosecity", label="Choose a city",placeholder="London maybe?!"),
+        tags$head(
+          # Including custom CSS
+          includeCSS("../shiny_touristR/theme_style/styles.css")
+        ),
 
 
 
+        leafletOutput("mymap", width="100%", height="100%"),
 
 
-                                               # Input: place
-                                               shiny::selectInput(inputId = "place",
-                                                                  label = "Choose a place:",
-                                                                  choices = c("Monument", "Museum", "Nightlife","Parcs"))
-
-                                                )),
-
-
-
-################################################################################
-                    tabPanel(title="About",
-                             br(),
-                             h4("Description:"),
-                             p("Tourist friendly map based on live-fetched data from Twitter."),
-                             br(),
-                             h4("Data Source:"),
-                             p(a("Twitter API",href=
-                                              "https://twitter.com/")),
-
-                             br(),
-                             h4("Authors Information:"),
-                             p("Ayrton Rua: ayrton.gomesmartinsrua@unil.ch"),
-
-                             p("Maurizio Griffo: maurizio.griffo@unil.ch"),
+    absolutePanel(
+      id = "controls",
+      class = "panel panel-default",
+      fixed = TRUE,
+      draggable = TRUE,
+      top = 70,
+      left = "auto",
+      right = 15,
+      bottom = "auto",
+      width = 340,
+      height = "auto",
 
 
-                             p("Ali Karray: mohamedali.karray@unil.ch"),
+      h2("Interactive parameters", align = "center"),
 
 
-                             p("Mohit Mehrotra: mohit.mehrotra@unil.ch"),
+      h6(shiny::helpText(
+        em(
+          "Create an interactive tourist friendly city hot-spot guide using Twitter data."
+        )
+      )   ,  align = "left"),
+
+      # Input choose city
+      h4(
+        shiny::textInput(
+          inputId = "choosecity",
+          label = "Choose a city",
+          placeholder = "London maybe?!"
+        )    ,
+        align = "center"
+      ) ,
 
 
-                             p("Youness Zarhloul: youness.zarhloul@unil.ch"),
-                             br(),
-
-                             h4("Links:"),
 
 
-                             p("Github:", a("https://github.com/AyrtonRua/group1_project")),
 
-                              p("Course website:", a("https://ptds2018.netlify.com")),
+      # Input: place
+      h4(
+        shiny::selectInput(
+          inputId = "place",
+          label = "Choose a place:",
+          choices = c("Monument", "Museum", "Nightlife", "Parcs")
+        ) ,
+        align = "center"
+      )
 
-                             br(),
-                             br(),
-                             p("HEC Lausanne, 2018"),
-                             p("Programming tools in data science"),
-                             p("Licence: GNU Licence")
 
 
-                    )
-####################################################################################################
+
+
+    )
+  )
+
+
+  ),
+
+
+
+  ################################################################################
+  tabPanel(
+    title = "About",
+    h4("Description:"),
+    p("Tourist friendly map based on live-fetched data from Twitter."),
+    br(),
+    h4("Data Source:"),
+    p(a("Twitter API", href =
+          "https://twitter.com/")),
+
+    br(),
+    h4("Authors Information:"),
+    p("Ayrton Rua: ayrton.gomesmartinsrua@unil.ch"),
+
+    p("Maurizio Griffo: maurizio.griffo@unil.ch"),
+
+
+    p("Ali Karray: mohamedali.karray@unil.ch"),
+
+
+    p("Mohit Mehrotra: mohit.mehrotra@unil.ch"),
+
+
+    p("Youness Zarhloul: youness.zarhloul@unil.ch"),
+    br(),
+
+    h4("Source Code:"),
+    p("Github:", a(
+      "https://github.com/AyrtonRua/group1_project"
+    )),
+
+    br(),
+
+    h4("Credits:"),
+
+
+    p("Course website:", a("https://ptds2018.netlify.com")),
+
+
+    p("Fangzhou Cheng:", a(
+      "https://github.com/funjo/NYPD_accidents_shiny"
+    )),
+
+
+    br(),
+    br(),
+    p("HEC Lausanne, 2018"),
+    p("Programming tools in data science"),
+    p("Licence: GNU Licence")
+
+
+  )
+  ####################################################################################################
 
 
 
