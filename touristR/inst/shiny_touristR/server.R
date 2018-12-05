@@ -1,73 +1,134 @@
 
+
 library("shiny")
-library("ptds2018hw4g1")
+library("touristR")
 library("magrittr")
 library("leaflet")
 
-
-
-  shinyServer(
-
-  function(input,output, session){
+library(htmltools)
+library(htmlwidgets)
 
 
 
-  data <- reactive({
-    df <- ggmap::geocode(location =
+shinyServer(function(input, output, session) {
+  df <- shiny::reactive({
+                          geotag <- ggmap::geocode(location =
+                             input$choosecity,
+                             source = "dsk") %>% as.data.frame()
 
-
-                    #goal here would be user inputs the city
-                    #then we run a search to obtain the latitude and longitude
-                    #make it a datraframe df like bellow which is used to make the map
-
-
-                    #uses the city inputted by the user as input to obtain latitude and longitude to obtain map
-                    input$choosecity ,
-
-                  source = "dsk") %>% as.data.frame() %>% dplyr::rename("long" =lon)
+ # twitterdata <- function( input$choosecity)
 
   })
-
-
-
-
-
 
 
 
 
   output$mymap <- leaflet::renderLeaflet({
-    df <- data()
+    geotag <- df()
+    #    twitterdata <- df()
 
 
-    m <- leaflet::leaflet(data = df) %>%
+ m <-    leaflet::leaflet(data = df()) %>%
+   addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
 
 
-      setView(lng = df$long, lat = df$lat, zoom = 12)  %>%
+   addEasyButton(easyButton(
+     icon="fa-crosshairs", title="Locate Me",
+     onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
 
-    #  addProviderTiles(provider=) %>%   choose one provide so map looks nice
-      #check https://stackoverflow.com/questions/37996143/r-leaflet-zoom-control-level those styles
 
 
-      addTiles() %>%
-      addMarkers(lng = ~long,
-                 lat = ~lat,
-                 popup = paste("Name", df$name, "<br>",
-                               "Language:", df$language))
+      #focus the geotag on the city as a whole
 
-     m
+      leaflet::setView(lng = geotag[,1],   lat = geotag[,2],    zoom = 12)       # %>%
+
+
+#NOT RUN BELLOW
+     # addMarkers(data=twitterdata, lng = ~long ,    lat = ~lat ,
+     #            popup = paste("Name", name, "<br>",
+     #                          "Type:", type),
+        #             label= paste("Name", name, "<br>",
+ #                          "Type:", type),
+     #          clusterOptions = markerClusterOptions(),
+     #          clusterId = "Places")
+ #NOT RUN ABOVE
+
+ #https://rstudio.github.io/leaflet/markers.html
+
+ # getColor <- function(twitterdata=twitterdata) {
+ #   sapply(twitterdata$sentiment, function(sentiment) {
+ #     if(sentiment == "high") {
+ #       "green"
+ #     } else if(sentiment == "mid") {
+ #       "orange"
+ #     } else {
+ #       "red"
+ #     } })
+ # }
+ #
+ #
+ # icons <- awesomeIcons(
+ #   icon = 'glyphicon glyphicon-map-marker',
+ #   iconColor = 'black',
+ #   library = 'glyphicon',
+ #   markerColor = getColor(twitterdata)
+ # )
+ #
+ #
+ #   addAwesomeMarkers(~twitterdata$long, ~twitterdata$lat,icon=icons,
+ #
+ #                     popup = paste("Name", twitterdata$name, "<br>",
+ #                             "Type:", twitterdata$type),
+ #                 label= paste("Name", twitterdata$name, "<br>",
+ #                             "Type:", twitterdata$type),
+ #                 clusterOptions = markerClusterOptions(),
+ #                           clusterId = "Places" )  %>%
+#here one option is to keep in # markerClusterOptions and  clusterId
+ #and use for size circle
+ #
+
+
+ # getradius <- function(twitterdata=twitterdata) {
+ #   sapply(twitterdata$count, function(count) {
+ #     if(count == "high") {
+ #           3
+ #     } else if(count == "mid") {
+ #       2
+ #     } else {
+ #       1
+ #     } })
+ # }
+ #
+
+
+ #https://rstudio.github.io/leaflet/markers.html
+
+ # addCircleMarkers(data = Jun, lat = ~twitterdata$lat , lng = ~twitterdata$long ,
+ #                  color = ~getColor(twitterdata),
+ #
+ #                  popup = paste("Name", twitterdata$name, "<br>",
+ #                                "Type:", twitterdata$type),
+ #
+ #
+ #                  radius = ~getradius(twitterdata)        )
+
+
+ #if it works copy the function add legend to make it also for the count of Twitter
+# addLegend(position = "bottomleft", colors = c("green","orange","red"),
+#
+#           values = c("high", "mid", "low"),opacity = 1,
+#           title = "Sentiment analysis"
+#
+#           )
+
+
+ m
+
+
   })
 
 
 
 
 
-}
-
-)
-
-#keep the #'
-#devtools::document()
-
-
-
+})
