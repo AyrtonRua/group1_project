@@ -14,7 +14,7 @@ ui <- shinyUI(navbarPage(position="static-top",
 
         tags$head(
           # Including custom CSS
-          includeCSS("../shiny_touristR/theme_style/styles.css")
+          includeCSS("../shinyApp/www/styles.css")
         ),
 
 
@@ -83,7 +83,9 @@ ui <- shinyUI(navbarPage(position="static-top",
   ################################################################################
   tabPanel(
     title = "About",
-    h4("Description:"),
+
+ h4("Description:") ,
+
     p("Tourist friendly map based on live-fetched data from Twitter."),
     br(),
     h4("Data Source:"),
@@ -107,7 +109,7 @@ ui <- shinyUI(navbarPage(position="static-top",
     br(),
 
     h4("Source Code:"),
-    p("Github:", a(
+    p( icon("github")  , a(
       "https://github.com/AyrtonRua/group1_project"
     )),
 
@@ -116,7 +118,7 @@ ui <- shinyUI(navbarPage(position="static-top",
     h4("Credits:"),
 
 
-    p("Course website:", a("https://ptds2018.netlify.com")),
+    p(icon("book") ,  a("https://ptds2018.netlify.com")),
 
 
     p("Fangzhou Cheng:", a(
@@ -125,10 +127,20 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
     br(),
+
+
     br(),
+ div(  h4("")  ,   img(src="LogoHECLausanne.PNG",align="right", width=150,height=100 ) ),
+
+
     p("HEC Lausanne, 2018"),
     p("Programming tools in data science"),
+
     p("Licence: GNU Licence")
+
+
+
+
 
 
   )
