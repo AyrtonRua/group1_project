@@ -1,5 +1,9 @@
 
 
+
+#add namespace of each package and remove the libraries to be done!
+
+
 library("shiny")
 library("touristR")
 library("magrittr")

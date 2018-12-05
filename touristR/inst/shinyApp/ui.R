@@ -1,5 +1,10 @@
 
 
+#add namespace of each package and remove the libraries to be done!
+library("shiny")
+library("leaflet")
+library("ggmap")
+
 
 ui <- shinyUI(navbarPage(position="static-top",
   title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
