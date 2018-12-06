@@ -11,8 +11,6 @@ library("leaflet")
 
 
 
-
-
 shinyServer(function(input, output, session) {
 
   twitterdata <- shiny::reactive({
@@ -35,8 +33,13 @@ shinyServer(function(input, output, session) {
     twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
 
                      ifelse(sentiment == 1, "green", ifelse(sentiment == 0, "orange","red"))
+                  )
 
-                                                )
+    twitterfetch <-twitterfetch %>% mutate("radius" =
+                      ifelse(popularity == 1, 40, ifelse(popularity == 0, 25, 10))
+    )
+
+
 
     return(twitterfetch)
 
@@ -76,7 +79,7 @@ shinyServer(function(input, output, session) {
 
       #focus the geotag on the city as a whole
 
-  leaflet::setView(lng = geotag()$lon[1]  ,   lat =  geotag()$lat[1] ,    zoom = 12) %>%
+  leaflet::setView(lng = geotag()$lon[1]  ,   lat =  geotag()$lat[1] ,    zoom = 13) %>%
 
 
 
@@ -101,36 +104,39 @@ shinyServer(function(input, output, session) {
  #                             "Type:", twitterdata$type),
                   label= paste("Name:", twitterdata()$name ) ,
  #                             "Type:", twitterdata$type),
-                  clusterOptions = markerClusterOptions(),
-                            clusterId = "Places" )
+                  clusterOptions = markerClusterOptions(
+
+                    iconCreateFunction =
+                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             });
+                                           }")
+
+
+
+
+
+
+
+
+                  ),
+                            clusterId = "Places" ) %>%
 #here one option is to keep in # markerClusterOptions and  clusterId
  #and use for size circle
- #
 
-
- # getradius <- function(twitterdata=twitterdata) {
- #   sapply(twitterdata$count, function(count) {
- #     if(count == "high") {
- #           3
- #     } else if(count == "mid") {
- #       2
- #     } else {
- #       1
- #     } })
- # }
- #
 
 
  #https://rstudio.github.io/leaflet/markers.html
 
- # addCircleMarkers(data = Jun, lat = ~twitterdata$lat , lng = ~twitterdata$long ,
- #                  color = ~getColor(twitterdata),
- #
- #                  popup = paste("Name", twitterdata$name, "<br>",
- #                                "Type:", twitterdata$type),
+  addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+                   color =  twitterdata()$sentimentcolor,
  #
  #
- #                  radius = ~getradius(twitterdata)        )
+ #
+                   radius =  twitterdata()$radius       )
 
 
  #if it works copy the function add legend to make it also for the count of Twitter
