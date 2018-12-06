@@ -7,10 +7,11 @@ library(vosonSML)
 library(tidyverse)
 library(tidytext)
 
-authentication <- Authenticate("twitter", apiKey='L5OKQvggKlNEHlRmTJX6pW7iK',
-              apiSecret='TLrIDRv3MbA8BETX2bF0qbOcQzh8OpRZPDAQCmBdMtJ3aUOZef',
-              accessToken='1062258817499652096-egjP6aqFRnwbIl0sVDzjvWJTeI1SKQ',
-              accessTokenSecret='dI3k2NmkfNu7gWaiVODEgVOwlnYFhC4KSGyTgSchsG92P')
+ authentication <- Authenticate("twitter", apiKey='L5OKQvggKlNEHlRmTJX6pW7iK',
+               apiSecret='TLrIDRv3MbA8BETX2bF0qbOcQzh8OpRZPDAQCmBdMtJ3aUOZef',
+               accessToken='1062258817499652096-egjP6aqFRnwbIl0sVDzjvWJTeI1SKQ',
+               accessTokenSecret='dI3k2NmkfNu7gWaiVODEgVOwlnYFhC4KSGyTgSchsG92P')
+
 
 
 # Function to get hashtag from location names
@@ -67,7 +68,7 @@ getTripadvisorData <- function(city) {
 # example - twitterData <- getTwitterData("#eiffeltower")
 getTwitterData <- function(hashtag){
   twitter_data <- tryCatch({
-    Collect(credential=authentication,searchTerm=hashtag, numTweets=500,
+    Collect(credential=authentication,searchTerm=hashtag, numTweets=100,
             writeToFile=FALSE,language="en",verbose=TRUE)
   }, error = function(e) {
   }, finally = {
@@ -142,5 +143,6 @@ getTopNAttractions <- function(city, n) {
 
 
 # Example usage:
-# getTopNAttractions("london", 10)
+#getTopNAttractions("paris", 10)
+
 

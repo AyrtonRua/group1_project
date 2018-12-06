@@ -9,30 +9,62 @@ library("touristR")
 library("magrittr")
 library("leaflet")
 
-library(htmltools)
-library(htmlwidgets)
+
 
 
 
 shinyServer(function(input, output, session) {
-  df <- shiny::reactive({
-                          geotag <- ggmap::geocode(location =
-                             input$choosecity,
-                             source = "dsk") %>% as.data.frame()
 
- # twitterdata <- function( input$choosecity)
+  twitterdata <- shiny::reactive({
+
+
+    twitterfetch <-  getTopNAttractions(  as.character(input$choosecity), 10)
+
+
+    #correcting the levels and format of the  fetched data
+    twitterfetch <-  data.frame(lapply(twitterfetch, function(x) unlist(x)))
+
+    twitterfetch$lat <-     as.numeric(levels(twitterfetch$lat))[twitterfetch$lat]
+
+    twitterfetch$lng <-     as.numeric(levels(twitterfetch$lng))[twitterfetch$lng]
+
+    twitterfetch$name <-     as.character(levels(twitterfetch$name))[twitterfetch$name]
+
+    twitterfetch$hashtag <-     as.character(levels(twitterfetch$hashtag))[twitterfetch$hashtag]
+
+    twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
+
+                     ifelse(sentiment == 1, "green", ifelse(sentiment == 0, "orange","red"))
+
+                                                )
+
+    return(twitterfetch)
+
+#str(twitterfetch)
 
   })
 
 
 
 
+
+  geotag <- shiny::reactive({
+     geotag <- ggmap::geocode(location =
+                               as.character(input$choosecity),
+                              source = "dsk") %>% as.data.frame()
+
+
+   })
+
+
+
+
+
   output$mymap <- leaflet::renderLeaflet({
-    geotag <- df()
-    #    twitterdata <- df()
 
 
- m <-    leaflet::leaflet(data = df()) %>%
+
+ m <-    leaflet::leaflet() %>%
    addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
 
 
@@ -44,49 +76,33 @@ shinyServer(function(input, output, session) {
 
       #focus the geotag on the city as a whole
 
-      leaflet::setView(lng = geotag[,1],   lat = geotag[,2],    zoom = 12)       # %>%
+  leaflet::setView(lng = geotag()$lon[1]  ,   lat =  geotag()$lat[1] ,    zoom = 12) %>%
 
 
-#NOT RUN BELLOW
-     # addMarkers(data=twitterdata, lng = ~long ,    lat = ~lat ,
-     #            popup = paste("Name", name, "<br>",
-     #                          "Type:", type),
-        #             label= paste("Name", name, "<br>",
- #                          "Type:", type),
-     #          clusterOptions = markerClusterOptions(),
-     #          clusterId = "Places")
- #NOT RUN ABOVE
 
  #https://rstudio.github.io/leaflet/markers.html
 
- # getColor <- function(twitterdata=twitterdata) {
- #   sapply(twitterdata$sentiment, function(sentiment) {
- #     if(sentiment == "high") {
- #       "green"
- #     } else if(sentiment == "mid") {
- #       "orange"
- #     } else {
- #       "red"
- #     } })
- # }
+
  #
  #
- # icons <- awesomeIcons(
- #   icon = 'glyphicon glyphicon-map-marker',
- #   iconColor = 'black',
- #   library = 'glyphicon',
- #   markerColor = getColor(twitterdata)
- # )
+
  #
  #
- #   addAwesomeMarkers(~twitterdata$long, ~twitterdata$lat,icon=icons,
- #
- #                     popup = paste("Name", twitterdata$name, "<br>",
+    addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+
+                      icon=awesomeIcons(
+                        icon = 'glyphicon glyphicon-map-marker',
+                        iconColor = 'black',
+                        library = 'glyphicon',
+                        markerColor = twitterdata()$sentimentcolor
+                      ),
+
+                      popup = paste("Name:", twitterdata()$name),
  #                             "Type:", twitterdata$type),
- #                 label= paste("Name", twitterdata$name, "<br>",
+                  label= paste("Name:", twitterdata()$name ) ,
  #                             "Type:", twitterdata$type),
- #                 clusterOptions = markerClusterOptions(),
- #                           clusterId = "Places" )  %>%
+                  clusterOptions = markerClusterOptions(),
+                            clusterId = "Places" )
 #here one option is to keep in # markerClusterOptions and  clusterId
  #and use for size circle
  #
