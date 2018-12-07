@@ -148,10 +148,14 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
 
-  )
+  ),
   ####################################################################################################
 
 
+ tags$style(type="text/css",
+            ".shiny-output-error { visibility: hidden; }",
+            ".shiny-output-error:before { visibility: hidden; }"
+ )
 
 
 
