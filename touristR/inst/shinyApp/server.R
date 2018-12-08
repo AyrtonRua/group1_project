@@ -1,11 +1,8 @@
 
 
 
-#add namespace of each package and remove the libraries to be done!
-
-
+#add namespace and remove packages to be done!!!!!
 library("shiny")
-library("touristR")
 library("magrittr")
 library("leaflet")
 
@@ -16,7 +13,7 @@ shinyServer(function(input, output, session) {
   twitterdata <- shiny::reactive({
 
 
-    twitterfetch <-  getTopNAttractions(  as.character(input$choosecity), 10)
+    twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
 
 
     #correcting the levels and format of the  fetched data
@@ -38,6 +35,32 @@ shinyServer(function(input, output, session) {
     twitterfetch <-twitterfetch %>% mutate("radius" =
                       ifelse(popularity == 1, 40, ifelse(popularity == 0, 25, 10))
     )
+
+
+
+#############################TO BE CORRECTED
+    twitterfetch <- twitterfetch %>% mutate("type" =
+
+
+ifelse( contains(vars = name,match = "museum") , "museum",
+
+
+ifelse(  contains(vars = name,match = "monument")  ,"monuments"  , "attractions"   )
+
+
+
+        )
+
+                                             )
+
+#######filter based on user's request e.g. monument
+    twitterfetch <- twitterfetch %>% filter(type == input$place)
+
+    #############################TO BE CORRECTED
+
+
+
+
 
 
 

@@ -14,7 +14,7 @@ getTopNAttractions(city, n)
 }
 \value{
 A dataframe containing all results fetched from Tripadvisor
-and Twitter regarding the top attractions in the chosen city 
+and Twitter regarding the top attractions in the chosen city
 (e.g. popularity level).
 }
 \description{
@@ -25,14 +25,14 @@ about a certain place).
 }
 \details{
 The function automatically obtains the most relevant places
-for the selected city  based on a search on Tripdadvisor, then queries 
+for the selected city  based on a search on Tripdadvisor, then queries
 Twitter about each hot spot (e.g. monument). \cr
-Afterwards it runs a sentiment analysis on those selected N top attractions, 
+Afterwards it runs a sentiment analysis on those selected N top attractions,
 and also measures the popularitiy of the place
 (using the count of the number of tweets mentioning the #place).  \cr  \cr
-The function returns as a result a dataframe containing all the relevant 
+The function returns as a result a dataframe containing all the relevant
 information about the top spots in that city combining in that sense also
-live reviews from Twitter users, which can then be plotted interactively on a 
+live reviews from Twitter users, which can then be plotted interactively on a
 Shiny map as well \code{\link{run_Shiny}}.
 }
 \examples{

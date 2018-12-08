@@ -41,7 +41,7 @@
 #'
 #' @export
 run_shiny <- function() {
-  appDir <- system.file("shiny_touristR", package = "touristR")
+  appDir <- system.file("shinyApp", package = "touristR")
   if (appDir == "") {
     stop(
       "Could not find example directory. Try re-installing touristR",
