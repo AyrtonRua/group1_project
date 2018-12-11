@@ -120,7 +120,7 @@ getTopNAttractions <- function(city, n) {
       vosonSML::Collect(
         credential = authentication,
         searchTerm = hashtag,
-        numTweets = 100,
+        numTweets = 300,
         writeToFile = FALSE,
         language = "en",
         verbose = TRUE
@@ -175,7 +175,11 @@ getTopNAttractions <- function(city, n) {
     if (is.null(twitter_data)) {
       return(0)
     }
-    sentiment_score <- mean(getSentiments(twitter_data$text))
+    sentiment_vector <- getSentiments(twitter_data$text)
+    sentiment_score <- mean(sentiment_vector[sentiment_vector!=0])
+
+    if(is.nan(sentiment_score)) sentiment_score<-0
+
     return_list <-
       list(tweetCount = nrow(twitter_data),
            sentimentScore =
@@ -183,11 +187,18 @@ getTopNAttractions <- function(city, n) {
     return(return_list)
   }
 
-  calculateRanking <- function(d) {
+  calculateRelativeRanking <- function(d) {
     q <- quantile(d, c(0.33, 0.67))
     new_vec <-
       ifelse(d <= q["33%"] , -1, ifelse(d > q["33%"] &
                                           d <= q["67%"], 0, 1))
+    return(new_vec)
+  }
+
+  calculateAbsoluteRanking <- function(d) {
+    new_vec <-
+      ifelse(d <= -2 , -1, ifelse(d > -2 &
+                                          d <= 1.5, 0, 1))
     return(new_vec)
   }
 
@@ -200,14 +211,12 @@ getTopNAttractions <- function(city, n) {
 
   top_attractions[["tweetCount"]] <- tc_df$tweetCount
   top_attractions[["popularity"]] <-
-    calculateRanking(unlist(tc_df$tweetCount))
+    calculateRelativeRanking(unlist(tc_df$tweetCount))
   top_attractions[["sentimentScore"]] <- tc_df$sentimentScore
-  top_attractions[["sentiment"]] <-
-    calculateRanking(unlist(tc_df$sentimentScore))
-
-
+  top_attractions[["sentimentRelative"]] <-
+    calculateRelativeRanking(unlist(tc_df$sentimentScore))
+  top_attractions[["sentimentAbsolute"]] <-
+    calculateAbsoluteRanking(unlist(tc_df$sentimentScore))
 
   top_attractions
 }
-
-
