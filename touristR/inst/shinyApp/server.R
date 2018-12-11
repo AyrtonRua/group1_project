@@ -9,6 +9,12 @@ library("leaflet")
 library("tidyverse")
 
 
+library("shinyWidgets")
+
+
+library("DT")
+
+
 shinyServer(function(input, output, session) {
 
   twitterdata <- shiny::reactive({
@@ -28,17 +34,40 @@ shinyServer(function(input, output, session) {
 
     twitterfetch$hashtag <-     as.character(levels(twitterfetch$hashtag))[twitterfetch$hashtag]
 
-    twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
+    # #############################TO BE CORRECTED
 
-                     ifelse(sentiment == 1, "green", ifelse(sentiment == 0, "orange","red"))
-                  )
+    #previously was sentiment
+
+if(input$checkbox==TRUE) {
+
+  twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
+
+                                            ifelse(sentimentabsolute == 1, "green", ifelse(sentiment == 0, "orange","red"))
+  )
+
+} else if(input$checkbox==FALSE) {
+
+  twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
+
+                  ifelse(sentimentrelative == 1, "green", ifelse(sentiment == 0, "orange","red")))
+
+}
+
+
+
+    # #############################TO BE CORRECTED
+
+
 
     twitterfetch <-twitterfetch %>% mutate("radius" =
                       ifelse(popularity == 1, 40, ifelse(popularity == 0, 25, 10))
+
+
+
     )
 
 
-#
+
 # #############################TO BE CORRECTED
 #     twitterfetch <- twitterfetch %>% mutate("type" =
 #
@@ -179,6 +208,39 @@ shinyServer(function(input, output, session) {
 
 
 
+
+
+
+  ################################## add dataframe of twitter
+
+
+
+  twitterdata <- reactive({
+
+    twitterdata <- touristR::track_keyword(keyword = input$choosecity, number = 1,sincetype = "weeks",provideN = 100)
+
+  })
+
+
+
+
+
+  output$twitterdatatable <- DT::renderDataTable({
+    datatable(twitterdata(),rownames = FALSE,
+                                 autoHideNavigation = TRUE,
+                                class = 'cell-border stripe',
+                                options = list(pageLength = 10),
+
+                        caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
+
+
+})
+
+
+
+
+
+  ##################################
 
 
 })

@@ -6,6 +6,14 @@ library("leaflet")
 library("ggmap")
 
 
+library("shinyWidgets")
+
+
+library("DT")
+
+
+
+
 ui <- shinyUI(navbarPage(position="static-top",
   title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
   id = "nav",
@@ -71,7 +79,13 @@ ui <- shinyUI(navbarPage(position="static-top",
           choices = c("Monument", "Museum", "Nightlife", "Parcs")
         ) ,
         align = "center"
-      )
+      ),
+
+
+      br(),    h5( prettyCheckbox(
+        inputId = "checkbox", label = "Absolute sentiment?",
+        shape = "square", outline = TRUE, status = "info",bigger=TRUE
+      ), align= "left" )
 
 
 
@@ -84,6 +98,26 @@ ui <- shinyUI(navbarPage(position="static-top",
   ),
 
 
+  ################################################################################ to be  corrected
+
+  tabPanel( title = "Twitter data",
+
+            DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ),
 
   ################################################################################
   tabPanel(

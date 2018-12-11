@@ -54,10 +54,10 @@ getTopNAttractions <- function(city, n) {
   authentication <-
     vosonSML::Authenticate(
       "twitter",
-      apiKey = 'L5OKQvggKlNEHlRmTJX6pW7iK',
-      apiSecret = 'TLrIDRv3MbA8BETX2bF0qbOcQzh8OpRZPDAQCmBdMtJ3aUOZef',
-      accessToken = '1062258817499652096-egjP6aqFRnwbIl0sVDzjvWJTeI1SKQ',
-      accessTokenSecret = 'dI3k2NmkfNu7gWaiVODEgVOwlnYFhC4KSGyTgSchsG92P'
+      apiKey = "QGkK4T5I6IsOFsM7UokyM1pGC",
+      apiSecret = "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO",
+      accessToken = "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ",
+      accessTokenSecret = "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
     )
 
 
