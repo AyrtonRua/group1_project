@@ -6,6 +6,7 @@ library("shiny")
 library("magrittr")
 library("leaflet")
 
+library("tidyverse")
 
 
 shinyServer(function(input, output, session) {
@@ -13,7 +14,7 @@ shinyServer(function(input, output, session) {
   twitterdata <- shiny::reactive({
 
 
-    twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
+    twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 10)
 
 
     #correcting the levels and format of the  fetched data
@@ -37,24 +38,24 @@ shinyServer(function(input, output, session) {
     )
 
 
-
-#############################TO BE CORRECTED
-    twitterfetch <- twitterfetch %>% mutate("type" =
-
-
-ifelse( contains(vars = name,match = "museum") , "museum",
-
-
-ifelse(  contains(vars = name,match = "monument")  ,"monuments"  , "attractions"   )
-
-
-
-        )
-
-                                             )
-
-#######filter based on user's request e.g. monument
-    twitterfetch <- twitterfetch %>% filter(type == input$place)
+#
+# #############################TO BE CORRECTED
+#     twitterfetch <- twitterfetch %>% mutate("type" =
+#
+#
+# ifelse( contains(vars = name,match = "museum") , "museum",
+#
+#
+# ifelse(  contains(vars = name,match = "monument")  ,"monuments"  , "attractions"   )
+#
+#
+#
+#         )
+#
+#                                              )
+#
+# #######filter based on user's request e.g. monument
+#     twitterfetch <- twitterfetch %>% filter(type == input$place)
 
     #############################TO BE CORRECTED
 
