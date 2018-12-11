@@ -8,7 +8,13 @@ Access token & access token secret
 76887198-JA3xCVO1vvQMqMDiIobWKKGQxYKSB0CV2lI2PZ7GL (Access token)
 IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz (Access token secret)
 
-######## ARYTON ###########
+######## AYRTON ###########
+
+
+api_key <- "QGkK4T5I6IsOFsM7UokyM1pGC"
+api_secret <- "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO"
+token <- "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ"
+token_secret <- "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
 
 
 
