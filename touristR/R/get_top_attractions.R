@@ -150,7 +150,7 @@ getTopNAttractions <- function(city, n) {
       tokens <- tidytext::unnest_tokens(tibble::data_frame(text = text), word, text)
       sentiments = dplyr::inner_join(tokens, tidytext::get_sentiments("bing"), by = "word")
       # pull out only sentiment words
-      counts = plyr::count(sentiments, sentiment)# count the # of positive & negative words
+      counts = dplyr::count(sentiments, sentiment)# count the # of positive & negative words
       spread = tidyr::spread(counts, sentiment, n, fill = 0)
       # made data wide rather than narrow
       tsentiment = 0
