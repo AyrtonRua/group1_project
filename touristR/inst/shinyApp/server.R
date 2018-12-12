@@ -14,13 +14,16 @@ library("shinyWidgets")
 
 library("DT")
 
+library("touristR")
+
 
 shinyServer(function(input, output, session) {
 
   twitterdata <- shiny::reactive({
 
 
-    twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 10)
+  twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
+
 
 
     #correcting the levels and format of the  fetched data
@@ -34,28 +37,23 @@ shinyServer(function(input, output, session) {
 
     twitterfetch$hashtag <-     as.character(levels(twitterfetch$hashtag))[twitterfetch$hashtag]
 
-    # #############################TO BE CORRECTED
 
-    #previously was sentiment
 
-if(input$checkbox==TRUE) {
+  twitterfetch <- twitterfetch %>% mutate("sentimentcolorabsolute" =
 
-  twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
-
-                                            ifelse(sentimentabsolute == 1, "green", ifelse(sentiment == 0, "orange","red"))
+                 ifelse(sentimentAbsolute == 1, "green", ifelse(sentimentAbsolute == 0, "orange","red"))
   )
 
-} else if(input$checkbox==FALSE) {
 
-  twitterfetch <- twitterfetch %>% mutate("sentimentcolor" =
+  twitterfetch <- twitterfetch %>% mutate("sentimentcolorrelative" =
 
-                  ifelse(sentimentrelative == 1, "green", ifelse(sentiment == 0, "orange","red")))
-
-}
+                  ifelse(sentimentRelative == 1, "green", ifelse(sentimentRelative == 0, "orange","red")))
 
 
 
-    # #############################TO BE CORRECTED
+
+
+     #############################TO BE CORRECTED
 
 
 
@@ -86,7 +84,6 @@ if(input$checkbox==TRUE) {
 # #######filter based on user's request e.g. monument
 #     twitterfetch <- twitterfetch %>% filter(type == input$place)
 
-    #############################TO BE CORRECTED
 
 
 
@@ -99,6 +96,13 @@ if(input$checkbox==TRUE) {
 #str(twitterfetch)
 
   })
+
+
+
+
+
+
+
 
 
 
@@ -118,7 +122,7 @@ if(input$checkbox==TRUE) {
 
   output$mymap <- leaflet::renderLeaflet({
 
-
+    if(input$checkbox==FALSE) {
 
  m <-    leaflet::leaflet() %>%
    addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
@@ -150,7 +154,7 @@ if(input$checkbox==TRUE) {
                         icon = 'glyphicon glyphicon-map-marker',
                         iconColor = 'black',
                         library = 'glyphicon',
-                        markerColor = twitterdata()$sentimentcolor
+                        markerColor = twitterdata()$sentimentcolorabsolute
                       ),
 
                       popup = paste("Name:", twitterdata()$name),
@@ -177,31 +181,95 @@ if(input$checkbox==TRUE) {
 
                   ),
                             clusterId = "Places" ) %>%
-#here one option is to keep in # markerClusterOptions and  clusterId
- #and use for size circle
 
-
-
- #https://rstudio.github.io/leaflet/markers.html
 
   addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
-                   color =  twitterdata()$sentimentcolor,
+                   color =  twitterdata()$sentimentcolorabsolute,
  #
  #
  #
                    radius =  twitterdata()$radius       )
 
 
- #if it works copy the function add legend to make it also for the count of Twitter
-# addLegend(position = "bottomleft", colors = c("green","orange","red"),
-#
-#           values = c("high", "mid", "low"),opacity = 1,
-#           title = "Sentiment analysis"
-#
-#           )
-
 
  m
+
+} else   if(input$checkbox==TRUE) {
+
+      m <-    leaflet::leaflet() %>%
+        addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
+
+
+        addEasyButton(easyButton(
+          icon="fa-crosshairs", title="Locate Me",
+          onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+
+
+
+        #focus the geotag on the city as a whole
+
+        leaflet::setView(lng = geotag()$lon[1]  ,   lat =  geotag()$lat[1] ,    zoom = 13) %>%
+
+
+
+        #add the marker
+      addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+
+                        icon=awesomeIcons(
+                          icon = 'glyphicon glyphicon-map-marker',
+                          iconColor = 'black',
+                          library = 'glyphicon',
+                          markerColor = twitterdata()$sentimentcolorrelative
+                        ),
+
+                        popup = paste("Name:", twitterdata()$name),
+                        #                             "Type:", twitterdata$type),
+                        label= paste("Name:", twitterdata()$name ) ,
+                        #                             "Type:", twitterdata$type),
+                        clusterOptions = markerClusterOptions(
+
+                          iconCreateFunction =
+                            JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             });
+                                           }")
+
+
+
+
+
+
+
+
+                        ),
+                        clusterId = "Places" ) %>%
+
+
+        addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+                         color =  twitterdata()$sentimentcolorrelative,
+                         #
+                         #
+                         #
+                         radius =  twitterdata()$radius       )
+
+
+
+      m
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
   })
@@ -214,27 +282,27 @@ if(input$checkbox==TRUE) {
   ################################## add dataframe of twitter
 
 
-
-  twitterdata <- reactive({
-
-    twitterdata <- touristR::track_keyword(keyword = input$choosecity, number = 1,sincetype = "weeks",provideN = 100)
-
-  })
-
-
-
-
-
-  output$twitterdatatable <- DT::renderDataTable({
-    datatable(twitterdata(),rownames = FALSE,
-                                 autoHideNavigation = TRUE,
-                                class = 'cell-border stripe',
-                                options = list(pageLength = 10),
-
-                        caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
-
-
-})
+#
+#   twitterdata <- reactive({
+#
+#     twitterdata <- touristR::track_keyword(keyword = input$choosecity, number = 1,sincetype = "weeks",provideN = 100)
+#
+#   })
+#
+#
+#
+#
+#
+#   output$twitterdatatable <- DT::renderDataTable({
+#     datatable(twitterdata(),rownames = FALSE,
+#                                  autoHideNavigation = TRUE,
+#                                 class = 'cell-border stripe',
+#                                 options = list(pageLength = 10),
+#
+#                         caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
+#
+#
+# })
 
 
 

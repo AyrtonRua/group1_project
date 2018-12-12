@@ -51,15 +51,14 @@
 #' @export
 getTopNAttractions <- function(city, n) {
   #Authenticate
-  authentication <-
-    vosonSML::Authenticate(
-      "twitter",
-      apiKey = "QGkK4T5I6IsOFsM7UokyM1pGC",
-      apiSecret = "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO",
-      accessToken = "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ",
-      accessTokenSecret = "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
-    )
-
+   authentication <-
+     vosonSML::Authenticate(
+       "twitter",
+       apiKey = "QGkK4T5I6IsOFsM7UokyM1pGC",
+       apiSecret = "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO",
+       accessToken = "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ",
+       accessTokenSecret = "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
+     )
 
 
   # Function to get hashtag from location names

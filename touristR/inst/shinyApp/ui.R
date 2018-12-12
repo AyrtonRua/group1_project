@@ -83,7 +83,7 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
       br(),    h5( prettyCheckbox(
-        inputId = "checkbox", label = "Absolute sentiment?",
+        inputId = "checkbox", label = "Relative sentiment?",
         shape = "square", outline = TRUE, status = "info",bigger=TRUE
       ), align= "left" )
 
@@ -100,12 +100,12 @@ ui <- shinyUI(navbarPage(position="static-top",
 
   ################################################################################ to be  corrected
 
-  tabPanel( title = "Twitter data",
+  tabPanel( title = "Twitter data"
 
-            DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
-
-
-
+            # DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
+            #
+            #
+            #
 
 
 
