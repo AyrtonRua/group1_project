@@ -25,6 +25,9 @@ shinyServer(function(input, output, session) {
   twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
 
 
+################## TO BE REMOVED
+ # twitterfetch <-  touristR::getTopNAttractions("london", 2)
+  ##################
 
     #correcting the levels and format of the  fetched data
     twitterfetch <-  data.frame(lapply(twitterfetch, function(x) unlist(x)))
@@ -248,6 +251,21 @@ shinyServer(function(input, output, session) {
       accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
     )
 
+##############TO BE CORRECTED
+#
+# input_search_twitter <-reactive({
+#
+# if() {
+#
+#   input_search_twitter <-  input$choosecity
+# } else if(){
+#
+#   input_search_twitter <-input$place_query
+# }
+#
+# })
+
+##############TO BE CORRECTED
 
 
   twitter_comment <- reactive({
@@ -311,22 +329,34 @@ shinyServer(function(input, output, session) {
    #####################   #####################place data
 
 
-   output$storechoice <- renderUI({
+   output$place_query <- renderUI({
 
 
 
 
-   selectInput( inputId= "place_query",
+   selectInput( inputId= "place_query",label = "Choose a place",
 
-                choices =  setNames(L1Data$ID_1,L1Data$Desc_1) ,
-                selected =
+                choices =     dput(as.character(twitterdata()$name)),
+                selected = twitterdata()$name[1]
 
    )
 
 
 
+   })
+
+
+
+
+   output$place_twitterdatatable <- DT::renderDataTable({
+
+
+
+
 
    })
+
+
 
    #####################   #####################
 
