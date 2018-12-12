@@ -431,8 +431,7 @@ track_keyword <- function(keyword, number,  sincetype, provideN) {
 
 
 
-  } else
-    if (sincetype == "weeks" && number < 3) {
+  } else if (sincetype == "weeks" && number < 3) {
       #correct date format and keep it with seconds to have a very specific
       #time precision level e.g. to be used during marketing campaigns
       #to identify the time slots where users post the most about a given
@@ -584,8 +583,7 @@ track_keyword <- function(keyword, number,  sincetype, provideN) {
 
 
 
-    }
-  else  {
+    } else  {
     finaldata$created <-
       lubridate::ymd_hms(finaldata$created,
                          tz = Sys.timezone(),
@@ -704,7 +702,7 @@ track_keyword <- function(keyword, number,  sincetype, provideN) {
 
     )
 
-    #for longer timeframe we aggregate data daily to smooth the
+    #for longer timeframes we aggregate data daily to smooth the
     #variations of the dataset
     #for short timeframes (less or equal than 2 weeks) we aggregate data
     #hourly for better representation of the short term variations

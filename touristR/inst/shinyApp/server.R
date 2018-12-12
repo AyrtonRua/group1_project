@@ -25,6 +25,7 @@ shinyServer(function(input, output, session) {
   twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
 
 
+
     #correcting the levels and format of the  fetched data
     twitterfetch <-  data.frame(lapply(twitterfetch, function(x) unlist(x)))
 
@@ -52,7 +53,7 @@ shinyServer(function(input, output, session) {
 
 
 
-     #############################TO BE CORRECTED
+     #############################
 
 
 
@@ -61,24 +62,16 @@ shinyServer(function(input, output, session) {
 
 
 
+
     )
-
-
-
-
 
 
 
 
     return(twitterfetch)
 
-#str(twitterfetch)
 
   })
-
-
-
-
 
 
 
@@ -136,9 +129,9 @@ shinyServer(function(input, output, session) {
                         markerColor = twitterdata()$sentimentcolorabsolute
                       ),
 
-                      popup = paste("Name:", twitterdata()$name),
- #                             "Type:", twitterdata$type),
-                  label= paste("Name:", twitterdata()$name ) ,
+                      popup =  twitterdata()$name,
+ #
+                  label=  twitterdata()$name ,
  #                             "Type:", twitterdata$type),
                   clusterOptions = markerClusterOptions(
 
@@ -291,7 +284,7 @@ shinyServer(function(input, output, session) {
 
 #rendering the table of tweets
 
-   output$twitterdatatable <- DT::renderDataTable({
+   output$city_twitterdatatable <- DT::renderDataTable({
      datatable(twitter_comment(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
                                   autoHideNavigation = TRUE,
                                  class = 'cell-border stripe',
@@ -315,8 +308,64 @@ shinyServer(function(input, output, session) {
 
 
 
+   #####################   #####################place data
 
-  ##################################
+
+   output$storechoice <- renderUI({
+
+
+
+
+   selectInput( inputId= "place_query",
+
+                choices =  setNames(L1Data$ID_1,L1Data$Desc_1) ,
+                selected =
+
+   )
+
+
+
+
+   })
+
+   #####################   #####################
+
+
+
+
+
+
+
+
+
+
+
+
+  ################################## get table names
+
+   # output$placenames <- DT::renderDataTable({
+   #
+   #   datatable(
+   #
+   #
+   #     twitterdata()$name %>%  as.tibble() %>% rename("tweet" = value),
+   #
+   #     rownames = FALSE,colnames = "Selected places",
+   #     autoHideNavigation = TRUE,
+   #     class = 'cell-border stripe',
+   #     options = list(pageLength = 10,searching = FALSE)
+   #
+   #
+   #
+   #   )
+   #
+   # })
+
+   ##################################
+
+
+
+
 
 
 })

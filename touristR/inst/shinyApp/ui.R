@@ -15,8 +15,9 @@ library("DT")
 
 
 ui <- shinyUI(navbarPage(position="static-top",
-  title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
+                      title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
   id = "nav",
+
 
   tabPanel(
     "Interactive map",
@@ -68,12 +69,22 @@ ui <- shinyUI(navbarPage(position="static-top",
       ) ,
 
 
+      br(),
 
 
-      br(),    h5( prettyCheckbox(
+      h5(
+ prettyCheckbox(
         inputId = "checkbox", label = "Relative sentiment?",
-        shape = "square", outline = TRUE, status = "info",bigger=TRUE
+        shape = "square", outline = TRUE, status = "info",bigger=TRUE, icon = icon("check")
       ), align= "left" )
+
+
+###############
+# #plot should render here the correct value
+#
+#  DT::dataTableOutput(outputId ="placenames",height = 10)
+#
+# ###############
 
 
 
@@ -86,26 +97,40 @@ ui <- shinyUI(navbarPage(position="static-top",
   ),
 
 
-  ################################################################################ to be  corrected
+  ################################################################################
+navbarMenu("Tweets",
+  tabPanel( title = "City data",
 
-  tabPanel( title = "Twitter data",
-
-             DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
-            #
-            #
-            #
+             DT::dataTableOutput(outputId ="city_twitterdatatable",height = 10)  ),
 
 
 
+  tabPanel( title = "Place data",
+
+
+column(width=4,    uiOutput("place_query")
+
+
+       ),
+
+
+
+
+
+        column(width=16,   DT::dataTableOutput(outputId ="place_twitterdatatable",height = 10)  )
+
+
+
+  )
+
+
+),
 
 
 
 
 
 
-
-
-            ),
 
   ################################################################################
   tabPanel(
