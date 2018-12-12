@@ -14,7 +14,11 @@ library("DT")
 
 
 
-ui <- shinyUI(navbarPage(position="static-top",
+ui <- shinyUI(
+
+
+
+  navbarPage(position="static-top",
                       title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
   id = "nav",
 
@@ -37,6 +41,7 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
     absolutePanel(
+
       id = "controls",
       class = "panel panel-default",
       fixed = TRUE,
@@ -72,20 +77,14 @@ ui <- shinyUI(navbarPage(position="static-top",
       br(),
 
 
-      h5(
- prettyCheckbox(
-        inputId = "checkbox", label = "Relative sentiment?",
-        shape = "square", outline = TRUE, status = "info",bigger=TRUE, icon = icon("check")
-      ), align= "left" )
+              h5(
 
+  prettyCheckbox(
+         inputId = "checkbox", label = "Relative sentiment?",
+         shape = "square", outline = TRUE, status = "info",bigger=TRUE, icon = icon("check")
+       )
 
-###############
-# #plot should render here the correct value
-#
-#  DT::dataTableOutput(outputId ="placenames",height = 10)
-#
-# ###############
-
+, align= "left" )
 
 
 
@@ -99,27 +98,31 @@ ui <- shinyUI(navbarPage(position="static-top",
 
   ################################################################################
 navbarMenu("Tweets",
-  tabPanel( title = "City data",
+  tabPanel(
+
+
+
+
+    title = "City data",value = "cityinput",
 
              DT::dataTableOutput(outputId ="city_twitterdatatable",height = 10)  ),
 
 
 
-  tabPanel( title = "Place data",
+  tabPanel(
+
+    title = "Place data",value="placeinput",
 
 
-column(width=4,    uiOutput("place_query")
-
-
-       ),
-
-
+column(width=4,    uiOutput("place_query")  ),
 
 
 
-        column(width=16,   DT::dataTableOutput(outputId ="place_twitterdatatable",height = 10)  )
+################################################################################
 
+ column(width=12,   DT::dataTableOutput(outputId ="place_twitterdatatable",height = 10)  )
 
+################################################################################
 
   )
 
@@ -203,7 +206,6 @@ column(width=4,    uiOutput("place_query")
             ".shiny-output-error { visibility: hidden; }",
             ".shiny-output-error:before { visibility: hidden; }"
  )
-
 
 
 

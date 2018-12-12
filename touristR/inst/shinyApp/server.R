@@ -17,6 +17,9 @@ library("DT")
 library("touristR")
 
 
+library("shinyjs")
+
+
 shinyServer(function(input, output, session) {
 
   twitterdata <- shiny::reactive({
@@ -251,28 +254,14 @@ shinyServer(function(input, output, session) {
       accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
     )
 
-##############TO BE CORRECTED
-#
-# input_search_twitter <-reactive({
-#
-# if() {
-#
-#   input_search_twitter <-  input$choosecity
-# } else if(){
-#
-#   input_search_twitter <-input$place_query
-# }
-#
-# })
+##############tab city
 
-##############TO BE CORRECTED
+  twitter_comment_city <- reactive({
 
 
-  twitter_comment <- reactive({
-
-
-    twitter_comment <-   twitteR::searchTwitter(
+    twitter_comment_city <-   twitteR::searchTwitter(
       searchString = paste("#",  input$choosecity , sep="") ,
+      lang = "en",
 
      # searchString = paste("#",  input$choosecity , sep="") ,
 
@@ -292,9 +281,9 @@ shinyServer(function(input, output, session) {
 
 
 
-    twitter_comment <-     twitter_comment %>% unlist()  %>% twitteR::twListToDF()
+    twitter_comment_city <-     twitter_comment_city %>% unlist()  %>% twitteR::twListToDF()
 
-    twitter_comment <- twitter_comment$text %>% as.tibble() %>% rename("tweet" = value)
+    twitter_comment_city <- twitter_comment_city$text %>% as.tibble() %>% rename("tweet" = value)
 
 
 
@@ -303,7 +292,7 @@ shinyServer(function(input, output, session) {
 #rendering the table of tweets
 
    output$city_twitterdatatable <- DT::renderDataTable({
-     datatable(twitter_comment(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
+     datatable(twitter_comment_city(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
                                   autoHideNavigation = TRUE,
                                  class = 'cell-border stripe',
                                  options = list(pageLength = 10,  scrollX='1000px'),
@@ -334,10 +323,11 @@ shinyServer(function(input, output, session) {
 
 
 
-   selectInput( inputId= "place_query",label = "Choose a place",
+   selectInput( inputId= "place_query_choice",label = "Choose a place",
 
                 choices =     dput(as.character(twitterdata()$name)),
-                selected = twitterdata()$name[1]
+                selected = as.character(twitterdata()$name)[1],
+                multiple = FALSE,selectize = TRUE
 
    )
 
@@ -347,8 +337,88 @@ shinyServer(function(input, output, session) {
 
 
 
+   ##############TO BE CORRECTED
+
+   input_search_twitterplace <- reactive({
+
+     input_search_twitterplace <- input$place_query_choice
+
+
+   })
+
+
+
+
+
+
+   ##############TO BE CORRECTED
+
+
+   twitter_comment_place <- reactive({
+
+
+     twitter_comment_place <-   twitteR::searchTwitter(
+       searchString = paste("#",  input_search_twitterplace() , sep="") ,
+       lang = "en",
+
+       # searchString = paste("#",  input$choosecity , sep="") ,
+
+       n = 100,
+       resultType = "mixed",
+       since =  (lubridate::today(tzone = Sys.timezone()) %>%
+                   lubridate::ymd() - 14 )     %>% as.character()    ,
+
+       until = lubridate::today(tzone = Sys.timezone()) %>%
+         lubridate::ymd() %>% as.character()  ,
+
+       #specifying the geocode to be sure we only obtain e.g. indeed
+       #the results published from Paris for search query Paris (tweet should
+       #be made within a radius of 80 miles from Paris maximum)
+
+       geocode = paste( geotag()$lat[1], geotag()$lon[1], "80mi", sep = ",")  )
+
+
+
+     twitter_comment_place <-     twitter_comment_place %>% unlist()  %>% twitteR::twListToDF()
+
+     twitter_comment_place <- twitter_comment_place$text %>% as.tibble() %>% rename("tweet" = value)
+
+
+
+   })
+
+
+
+
+
+
+
+
+
 
    output$place_twitterdatatable <- DT::renderDataTable({
+
+
+     datatable(twitter_comment_place(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
+               autoHideNavigation = TRUE,
+               class = 'cell-border stripe',
+               options = list(pageLength = 10,  scrollX='1000px'),
+
+               caption = tags$em(paste("Twitter data results for place:",
+
+
+                                       paste(
+                                         toupper(substr( input$place_query_choice, 1, 1)),
+
+                                         substr(input$place_query_choice, 2, nchar( input$place_query_choice)) , sep=""   ),
+
+                                       sep = " ")
+               )
+
+     )
+
+
+
 
 
 
