@@ -35,8 +35,6 @@ Choose a city = London,
 Choose a place = Monument
 }
 
-
-
 }
 \references{
 Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018).

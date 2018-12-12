@@ -7,14 +7,12 @@
 #' about a certain place).
 #'
 #' @param city A character vector of maximum length 1 (city requested)
-#' @param n An integer value
-#' (Number ot top spots to fectch for the chosen city)
-#'
+#' @param n A positive integer number (number of top spots to get for
+#' the requested city)
 #'
 #' @return A dataframe containing all results fetched from Tripadvisor
 #' and Twitter regarding the top attractions in the chosen city
 #' (e.g. popularity level).
-
 #'
 #' @author Ayrton Rua: \email{ayrton.gomesmartinsrua@unil.ch}
 #' @author Maurizio Griffo: \email{maurizio.griffo@unil.ch}
@@ -27,7 +25,7 @@
 #' An Introduction to Statistical Programming Methods with R.
 #' Retrieved from \url{https://smac-group.github.io/ds/}
 #'
-#' @seealso \code{\link{touristR} & \link{run_shiny}}
+#' @seealso \code{\link{touristR}} & \code{\link{run_shiny}}
 #'
 #' @examples \dontrun{getTopNAttractions(
 #' city = "london",
@@ -39,7 +37,7 @@
 #' for the selected city  based on a search on Tripdadvisor, then queries
 #' Twitter about each hot spot (e.g. monument). \cr
 #' Afterwards it runs a sentiment analysis on those selected N top attractions,
-#' and also measures the popularitiy of the place
+#' and also measures the popularity of the place
 #' (using the count of the number of tweets mentioning the #place).  \cr  \cr
 #' The function returns as a result a dataframe containing all the relevant
 #' information about the top spots in that city combining in that sense also
@@ -51,14 +49,14 @@
 #' @export
 getTopNAttractions <- function(city, n) {
   #Authenticate
-   authentication <-
-     vosonSML::Authenticate(
-       "twitter",
-       apiKey = "QGkK4T5I6IsOFsM7UokyM1pGC",
-       apiSecret = "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO",
-       accessToken = "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ",
-       accessTokenSecret = "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
-     )
+  authentication <-
+    vosonSML::Authenticate(
+      "twitter",
+      apiKey = "QGkK4T5I6IsOFsM7UokyM1pGC",
+      apiSecret = "jnZx2Lg0mNEuEDPX9g4ydi7z5Rt7WothdWYfp5q6vtGXzqdQqO",
+      accessToken = "1688753005-kAy1jHIirZkGlIoUlIggzsuwIae2EgyA7XJ8gFQ",
+      accessTokenSecret = "y3ZzJun64BaAYekFK7jybZeloGQ3J54iOkdA0aI0vomM7"
+    )
 
 
   # Function to get hashtag from location names
@@ -78,7 +76,7 @@ getTopNAttractions <- function(city, n) {
              city)
     tripadvisor_url <- gsub(" ", "%20", tripadvisor_url)
     resp <- httr::GET(tripadvisor_url)
-        httr::http_type(resp)
+    httr::http_type(resp)
     jsonResp <- httr::content(resp, as = "parsed")
 
     modJson <- jsonResp$results[[1]]
@@ -134,7 +132,7 @@ getTopNAttractions <- function(city, n) {
     }
     twitter_data$text <- iconv(twitter_data$text, to = "utf-8")
     #removing retweets
-    twitter_data <- (twitter_data[twitter_data$isRetweet == F,])
+    twitter_data <- (twitter_data[twitter_data$isRetweet == F, ])
     twitter_data
   }
 
@@ -146,7 +144,8 @@ getTopNAttractions <- function(city, n) {
     for (i in 1:len) {
       text = texts[i]
       text <- gsub("\\$", "", text)
-      tokens <- tidytext::unnest_tokens(tibble::data_frame(text = text), word, text)
+      tokens <-
+        tidytext::unnest_tokens(tibble::data_frame(text = text), word, text)
       sentiments = dplyr::inner_join(tokens, tidytext::get_sentiments("bing"), by = "word")
       # pull out only sentiment words
       counts = dplyr::count(sentiments, sentiment)# count the # of positive & negative words
@@ -175,9 +174,10 @@ getTopNAttractions <- function(city, n) {
       return(0)
     }
     sentiment_vector <- getSentiments(twitter_data$text)
-    sentiment_score <- mean(sentiment_vector[sentiment_vector!=0])
+    sentiment_score <- mean(sentiment_vector[sentiment_vector != 0])
 
-    if(is.nan(sentiment_score)) sentiment_score<-0
+    if (is.nan(sentiment_score))
+      sentiment_score <- 0
 
     return_list <-
       list(tweetCount = nrow(twitter_data),
@@ -197,7 +197,7 @@ getTopNAttractions <- function(city, n) {
   calculateAbsoluteRanking <- function(d) {
     new_vec <-
       ifelse(d <= -2 , -1, ifelse(d > -2 &
-                                          d <= 1.5, 0, 1))
+                                    d <= 1.5, 0, 1))
     return(new_vec)
   }
 

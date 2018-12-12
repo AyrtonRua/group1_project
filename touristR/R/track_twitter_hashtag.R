@@ -4,17 +4,17 @@
 #' from Twitter.
 #'
 #' @param keyword A character vector of maximum length 4 (keywords requested)
-#' @param type A character vector of length 1 ("place" or "other") \cr
-#' Type of keyword, can be either a city/place/monument name in English,
-#' to be referred to as place", or if needed another type of keyword,
-#' please specify by "other").  \cr
+#' @param type A character vector of length 1 (type of keyword, can
+#' be either a city/place/monument name in English, to be referred to as
+#' "place", or if needed another type of keyword, please specify by "other").  \cr
 #' Note: all keywords should be of the same types (e.g. all places' names).
 #' @param number A positive integer number (timeframe parameter)
 #' @param sincetype A character vector of length 1 (timeframe parameter),
 #' which can be (uniquely) on of the following:
 #' either "days", "weeks", "months" or "years"
+#'
 #' @param provideN A positive integer number
-#' (number ot tweets to fetch per keywords)
+#' (Number ot tweets to fetch per keywords)
 #'
 #' @return A timeseries scatterplot with the hashtag count on the y axis,
 #' and on the x axis the timeframe.

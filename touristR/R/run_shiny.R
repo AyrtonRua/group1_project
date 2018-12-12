@@ -1,4 +1,3 @@
-
 #' @title run_shiny
 #'
 #' @description Provide an interactive Shiny app, representing a tourist
@@ -7,7 +6,6 @@
 #'
 #' @param city City of interest
 #' @param place Activity/Place of interest
-
 #'
 #' @return An interactive map displaying the information requested by the user,
 #' enhanced by Twitter inputs (e.g. through sentiment analysis of the place).
@@ -29,8 +27,6 @@
 #' Choose a place = Monument
 #' }
 #'
-#'
-#'
 #' @details The function obtains automatically the longitude and latitude of
 #' the requested city and places, fectches the top spots accordingly from
 #' Tripadvisor, and runs a Twitter count and sentiment analysis, to return
@@ -43,12 +39,10 @@
 run_shiny <- function() {
   appDir <- system.file("shinyApp", package = "touristR")
   if (appDir == "") {
-    stop(
-      "Could not find example directory. Try re-installing touristR",
-      call. = FALSE
-    )
+    stop("Could not find example directory. Try re-installing touristR",
+         call. = FALSE)
   }
 
-  shiny::runApp(appDir, display.mode = "normal",launch.browser=TRUE)
+  shiny::runApp(appDir, display.mode = "normal", launch.browser = TRUE)
 
 }

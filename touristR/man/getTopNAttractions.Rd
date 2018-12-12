@@ -9,8 +9,8 @@ getTopNAttractions(city, n)
 \arguments{
 \item{city}{A character vector of maximum length 1 (city requested)}
 
-\item{n}{An integer value
-(Number ot top spots to fectch for the chosen city)}
+\item{n}{A positive integer number (number of top spots to get for
+the requested city)}
 }
 \value{
 A dataframe containing all results fetched from Tripadvisor
@@ -28,7 +28,7 @@ The function automatically obtains the most relevant places
 for the selected city  based on a search on Tripdadvisor, then queries
 Twitter about each hot spot (e.g. monument). \cr
 Afterwards it runs a sentiment analysis on those selected N top attractions,
-and also measures the popularitiy of the place
+and also measures the popularity of the place
 (using the count of the number of tweets mentioning the #place).  \cr  \cr
 The function returns as a result a dataframe containing all the relevant
 information about the top spots in that city combining in that sense also
@@ -50,7 +50,7 @@ An Introduction to Statistical Programming Methods with R.
 Retrieved from \url{https://smac-group.github.io/ds/}
 }
 \seealso{
-\code{\link{touristR} & \link{run_shiny}}
+\code{\link{touristR}} & \code{\link{run_shiny}}
 }
 \author{
 Ayrton Rua: \email{ayrton.gomesmartinsrua@unil.ch}
