@@ -100,9 +100,9 @@ ui <- shinyUI(navbarPage(position="static-top",
 
   ################################################################################ to be  corrected
 
-  tabPanel( title = "Twitter data"
+  tabPanel( title = "Twitter data",
 
-            # DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
+             DT::dataTableOutput(outputId ="twitterdatatable",height = 10)
             #
             #
             #

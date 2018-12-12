@@ -5,7 +5,9 @@
 #'
 #' @param keyword A character vector of maximum length 4 (keywords requested)
 #' @param number An integer value (Timeframe parameter)
-#' @param sincetype A character (Timeframe parameter)
+#' @param sincetype A character (Timeframe parameter) can be (uniquely)
+#' on of the following: either "days", "weeks" or "months"
+#'
 #' @param provideN An integer value
 #' (Number ot tweets to fectch for each keyword)
 #'

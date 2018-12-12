@@ -282,27 +282,31 @@ shinyServer(function(input, output, session) {
   ################################## add dataframe of twitter
 
 
+
+  twitter_comment <- reactive({
 #
-#   twitterdata <- reactive({
+    twitter_comment <- touristR::track_keyword(keyword = input$choosecity, number = 2,sincetype = "weeks",provideN = 100)
 #
-#     twitterdata <- touristR::track_keyword(keyword = input$choosecity, number = 1,sincetype = "weeks",provideN = 100)
-#
-#   })
-#
-#
-#
-#
-#
-#   output$twitterdatatable <- DT::renderDataTable({
-#     datatable(twitterdata(),rownames = FALSE,
-#                                  autoHideNavigation = TRUE,
-#                                 class = 'cell-border stripe',
-#                                 options = list(pageLength = 10),
-#
-#                         caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
+
+    twitter_comment <- touristR::track_keyword(keyword = "paris", number = 2,sincetype = "weeks",provideN = 100)
+
+
+   })
 #
 #
-# })
+#
+#
+#
+   output$twitterdatatable <- DT::renderDataTable({
+     datatable(twitterdata(),rownames = FALSE,
+                                  autoHideNavigation = TRUE,
+                                 class = 'cell-border stripe',
+                                 options = list(pageLength = 10),
+#
+                         caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
+#
+#
+ })
 
 
 

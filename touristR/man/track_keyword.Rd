@@ -11,7 +11,8 @@ track_keyword(keyword, number, sincetype, provideN)
 
 \item{number}{An integer value (Timeframe parameter)}
 
-\item{sincetype}{A character (Timeframe parameter)}
+\item{sincetype}{A character (Timeframe parameter) can be (uniquely)
+on of the following: either "days", "weeks" or "months"}
 
 \item{provideN}{An integer value
 (Number ot tweets to fectch for each keyword)}
