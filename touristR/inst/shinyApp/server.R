@@ -25,7 +25,6 @@ shinyServer(function(input, output, session) {
   twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
 
 
-
     #correcting the levels and format of the  fetched data
     twitterfetch <-  data.frame(lapply(twitterfetch, function(x) unlist(x)))
 
@@ -63,26 +62,6 @@ shinyServer(function(input, output, session) {
 
 
     )
-
-
-
-# #############################TO BE CORRECTED
-#     twitterfetch <- twitterfetch %>% mutate("type" =
-#
-#
-# ifelse( contains(vars = name,match = "museum") , "museum",
-#
-#
-# ifelse(  contains(vars = name,match = "monument")  ,"monuments"  , "attractions"   )
-#
-#
-#
-#         )
-#
-#                                              )
-#
-# #######filter based on user's request e.g. monument
-#     twitterfetch <- twitterfetch %>% filter(type == input$place)
 
 
 
@@ -266,11 +245,6 @@ shinyServer(function(input, output, session) {
   })
 
 
-
-
-
-
-
   #Authenticate to twitter
   authentication <-
     vosonSML::Authenticate(
@@ -280,6 +254,7 @@ shinyServer(function(input, output, session) {
       accessToken =  '76887198-JA3xCVO1vvQMqMDiIobWKKGQxYKSB0CV2lI2PZ7GL',
       accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
     )
+
 
 
   twitter_comment <- reactive({
@@ -300,9 +275,9 @@ shinyServer(function(input, output, session) {
 
       #specifying the geocode to be sure we only obtain e.g. indeed
       #the results published from Paris for search query Paris (tweet should
-      #be made within a radius of 60 miles from Paris maximum)
+      #be made within a radius of 80 miles from Paris maximum)
 
-      geocode = paste( geotag()$lat[1], geotag()$lon[1], "60mi", sep = ",")  )
+      geocode = paste( geotag()$lat[1], geotag()$lon[1], "80mi", sep = ",")  )
 
 
 
@@ -317,7 +292,7 @@ shinyServer(function(input, output, session) {
 #rendering the table of tweets
 
    output$twitterdatatable <- DT::renderDataTable({
-     datatable(twitter_comment(),rownames = FALSE,colnames = "Tweets",
+     datatable(twitter_comment(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
                                   autoHideNavigation = TRUE,
                                  class = 'cell-border stripe',
                                  options = list(pageLength = 10,  scrollX='1000px'),

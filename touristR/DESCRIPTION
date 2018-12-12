@@ -17,7 +17,7 @@ Authors@R: c(
     )
 Maintainer: The package maintainer is Ayrton Rua <ayrton.gomesmartinsrua@unil.ch>
 Description: The provide an interactive Shiny map allowing providing the user (traveller) with useful and easy to access information about cities of interest, using Twitter and Tripadvisor data. It allows also to query Twitter to obtain information about the popularity of different keywords (e.g. London) over time.
-License: GNU General Public License
+License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0

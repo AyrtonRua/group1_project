@@ -182,7 +182,7 @@ track_keyword <- function(keyword, number,  sincetype, provideN) {
         #the results published from Paris for search query Paris (tweet should
         #be made within a radius of 60 miles from Paris maximum)
 
-        geocode = paste(df[i,]$lat, df[i,]$long, "60mi", sep = ",")
+        geocode = paste(df[i,]$lat, df[i,]$long, "80mi", sep = ",")
 
 
       )

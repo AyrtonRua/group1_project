@@ -70,18 +70,6 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
 
-
-      # Input: place
-      h4(
-        shiny::selectInput(
-          inputId = "place",
-          label = "Choose a place:",
-          choices = c("Monument", "Museum", "Nightlife", "Parcs")
-        ) ,
-        align = "center"
-      ),
-
-
       br(),    h5( prettyCheckbox(
         inputId = "checkbox", label = "Relative sentiment?",
         shape = "square", outline = TRUE, status = "info",bigger=TRUE
@@ -128,7 +116,7 @@ ui <- shinyUI(navbarPage(position="static-top",
     p("Tourist friendly map based on live-fetched data from Twitter."),
     br(),
     h4("Data Source:"),
-    p(a("Twitter API", href =
+    p(icon("twitter"), a("Twitter", href =
           "https://twitter.com/")),
 
     br(),
@@ -148,8 +136,8 @@ ui <- shinyUI(navbarPage(position="static-top",
     br(),
 
     h4("Source Code:"),
-    p( icon("github")  , a(
-      "https://github.com/AyrtonRua/group1_project"
+    p( icon("github")  , a("Group1 project",
+      href="https://github.com/AyrtonRua/group1_project"
     )),
 
     br(),
@@ -157,11 +145,11 @@ ui <- shinyUI(navbarPage(position="static-top",
     h4("Credits:"),
 
 
-    p(icon("book") ,  a("https://ptds2018.netlify.com")),
+    p(icon("book") ,  a("Programming tools in data science, Fall 2018",href="https://ptds2018.netlify.com")),
 
 
-    p("Fangzhou Cheng:", a(
-      "https://github.com/funjo/NYPD_accidents_shiny"
+    p(  icon("github"), a("Fangzhou Cheng",
+      href= "https://github.com/funjo/NYPD_accidents_shiny"
     )),
 
 
@@ -173,9 +161,9 @@ ui <- shinyUI(navbarPage(position="static-top",
 
 
     p("HEC Lausanne, 2018"),
-    p("Programming tools in data science"),
+    p("Programming tools in data science, Fall 2018"),
 
-    p("Licence: GNU Licence")
+    p("Licence: GPL-2")
 
 
 
