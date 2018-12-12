@@ -17,8 +17,6 @@ library("DT")
 library("touristR")
 
 
-library("shinyjs")
-
 
 shinyServer(function(input, output, session) {
 

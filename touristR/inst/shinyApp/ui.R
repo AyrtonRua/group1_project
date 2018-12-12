@@ -79,13 +79,14 @@ ui <- shinyUI(
 
               h5(
 
+
+
   prettyCheckbox(
          inputId = "checkbox", label = "Relative sentiment?",
          shape = "square", outline = TRUE, status = "info",bigger=TRUE, icon = icon("check")
        )
 
 , align= "left" )
-
 
 
 
