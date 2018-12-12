@@ -1,4 +1,6 @@
 
+/* Import font Muli */
+
 @import url('https://fonts.google.com/specimen/Muli');
 
 
@@ -48,5 +50,15 @@ h1, h2, h3, h4 { font-weight: 500; }
 }
 
 
+ /* Remove warnings message inside the shiny output */
+.shiny-output-error {
+  visibility: hidden; }
+.shiny-output-error:before { visibility: hidden; }
+
+
+
+ /* sets the text color to white on the navigation bar */
+
+.navbar .navbar-default .navbar-brand{color: white;}
 
 

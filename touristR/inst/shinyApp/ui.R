@@ -16,7 +16,8 @@ library("DT")
 
 ui <- shinyUI(
 
-
+  # add class navbar to be used to add css styling
+  div(class = "navbar",
 
   navbarPage(position="static-top",
                       title = "Welcome to touristR!",inverse=TRUE,collapsible=TRUE,fluid=TRUE,
@@ -77,16 +78,16 @@ ui <- shinyUI(
       br(),
 
 
-              h5(
+              h4(
 
 
 
                 materialSwitch(
-         inputId = "checkbox", label = "Relative sentiment?",value = FALSE,right = TRUE
+         inputId = "checkbox", label = "Relative sentiment?",value = FALSE,right = TRUE,width = '100%'
 
-       )
+       ),
 
-, align= "left" )
+align= "left" )
 
 
 
@@ -118,12 +119,8 @@ navbarMenu("Tweets",
 column(width=4,    uiOutput("place_query")  ),
 
 
-
-################################################################################
-
  column(width=12,   DT::dataTableOutput(outputId ="place_twitterdatatable",height = 10)  )
 
-################################################################################
 
   )
 
@@ -196,81 +193,11 @@ column(width=4,    uiOutput("place_query")  ),
 
 
 
+)
 
 
-
-  ),
-  ####################################################################################################
-
-
- tags$style(type="text/css",
-            ".shiny-output-error { visibility: hidden; }",
-            ".shiny-output-error:before { visibility: hidden; }"
- )
-
-
-
-
-
-
-
+  )
 
 
 
 ))
-
-
-#
-#
-#
-#
-#
-#
-# shiny::fixedPage(
-#
-# #title in first row
-#   shiny::fixedRow(shiny::titlePanel("Welcome to touristR!")),
-#
-#
-#   #2nd row with 1 column on the left with the map
-#   #and 1 column on the right for the interactive aspects (inputs)
-#   shiny::fixedRow(title="touristR Shiny Output",
-#                   shiny::column(10,
-#                   leaflet::leafletOutput("mymap",height = 700)
-#
-#            ),
-#
-#
-#
-#            shiny::column(2,
-#
-#
-#                   shiny::helpText( "Create an interactive tourist friendly city hot-spot guide using Twitter data.")  ,
-#
-#                   # Input choose city
-#                   shiny::textInput(inputId= "choosecity", label="Choose a city",placeholder="London maybe?!"),
-#
-#
-#
-#
-#
-#                   # Input: place
-#                   shiny::selectInput(inputId = "place",
-#                               label = "Choose a place:",
-#                               choices = c("Monument", "Museum", "Nightlife","Parcs"))
-#
-#
-#
-#            )
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#   )
-# )

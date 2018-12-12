@@ -26,9 +26,6 @@ shinyServer(function(input, output, session) {
   twitterfetch <-  touristR::getTopNAttractions(  as.character(input$choosecity), 2)
 
 
-################## TO BE REMOVED
- # twitterfetch <-  touristR::getTopNAttractions("london", 2)
-  ##################
 
     #correcting the levels and format of the  fetched data
     twitterfetch <-  data.frame(lapply(twitterfetch, function(x) unlist(x)))
@@ -53,11 +50,6 @@ shinyServer(function(input, output, session) {
 
                   ifelse(sentimentRelative == 1, "green", ifelse(sentimentRelative == 0, "orange","red")))
 
-
-
-
-
-     #############################
 
 
 
@@ -115,15 +107,8 @@ shinyServer(function(input, output, session) {
   leaflet::setView(lng = geotag()$lon[1]  ,   lat =  geotag()$lat[1] ,    zoom = 13) %>%
 
 
+   #add markers in the map
 
- #https://rstudio.github.io/leaflet/markers.html
-
-
- #
- #
-
- #
- #
     addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
 
                       icon=awesomeIcons(
@@ -242,7 +227,7 @@ shinyServer(function(input, output, session) {
   })
 
 
-  #Authenticate to twitter
+  ###############Authenticate to twitter
   authentication <-
     vosonSML::Authenticate(
       "twitter",
@@ -252,7 +237,8 @@ shinyServer(function(input, output, session) {
       accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
     )
 
-##############tab city
+  ##############
+
 
   twitter_comment_city <- reactive({
 
@@ -313,8 +299,6 @@ shinyServer(function(input, output, session) {
 
 
 
-   #####################   #####################place data
-
 
    output$place_query <- renderUI({
 
@@ -335,7 +319,6 @@ shinyServer(function(input, output, session) {
 
 
 
-   ##############TO BE CORRECTED
 
    input_search_twitterplace <- reactive({
 
@@ -346,20 +329,12 @@ shinyServer(function(input, output, session) {
 
 
 
-
-
-
-   ##############TO BE CORRECTED
-
-
    twitter_comment_place <- reactive({
 
 
      twitter_comment_place <-   twitteR::searchTwitter(
        searchString = paste("#",  input_search_twitterplace() , sep="") ,
        lang = "en",
-
-       # searchString = paste("#",  input$choosecity , sep="") ,
 
        n = 100,
        resultType = "mixed",
@@ -423,47 +398,6 @@ shinyServer(function(input, output, session) {
 
 
    })
-
-
-
-   #####################   #####################
-
-
-
-
-
-
-
-
-
-
-
-
-  ################################## get table names
-
-   # output$placenames <- DT::renderDataTable({
-   #
-   #   datatable(
-   #
-   #
-   #     twitterdata()$name %>%  as.tibble() %>% rename("tweet" = value),
-   #
-   #     rownames = FALSE,colnames = "Selected places",
-   #     autoHideNavigation = TRUE,
-   #     class = 'cell-border stripe',
-   #     options = list(pageLength = 10,searching = FALSE)
-   #
-   #
-   #
-   #   )
-   #
-   # })
-
-   ##################################
-
-
-
-
 
 
 })
