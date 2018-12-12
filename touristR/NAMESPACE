@@ -2,5 +2,5 @@
 
 export(getTopNAttractions)
 export(run_shiny)
-export(track_keyword)
+export(track_twitter_hashtag)
 importFrom(magrittr,"%>%")
