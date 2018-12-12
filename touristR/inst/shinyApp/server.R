@@ -263,15 +263,6 @@ shinyServer(function(input, output, session) {
 
 
 
-
-
-
-
-
-
-
-
-
   })
 
 
@@ -279,35 +270,73 @@ shinyServer(function(input, output, session) {
 
 
 
-  ################################## add dataframe of twitter
 
+  #Authenticate to twitter
+  authentication <-
+    vosonSML::Authenticate(
+      "twitter",
+      apiKey = 'ugjqg8RGNvuTAL1fEiNtw',
+      apiSecret = '4WjuEbP6QLUN2DwDzyTwmdMES6fgnOsS65fWxpT8I',
+      accessToken =  '76887198-JA3xCVO1vvQMqMDiIobWKKGQxYKSB0CV2lI2PZ7GL',
+      accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
+    )
 
 
   twitter_comment <- reactive({
-#
-    twitter_comment <- touristR::track_keyword(keyword = input$choosecity, number = 2,sincetype = "weeks",provideN = 100)
-#
 
-    twitter_comment <- touristR::track_keyword(keyword = "paris", number = 2,sincetype = "weeks",provideN = 100)
+
+    twitter_comment <-   twitteR::searchTwitter(
+      searchString = paste("#",  input$choosecity , sep="") ,
+
+     # searchString = paste("#",  input$choosecity , sep="") ,
+
+      n = 100,
+      resultType = "mixed",
+      since =  (lubridate::today(tzone = Sys.timezone()) %>%
+        lubridate::ymd() - 14 )     %>% as.character()    ,
+
+      until = lubridate::today(tzone = Sys.timezone()) %>%
+        lubridate::ymd() %>% as.character()  ,
+
+      #specifying the geocode to be sure we only obtain e.g. indeed
+      #the results published from Paris for search query Paris (tweet should
+      #be made within a radius of 60 miles from Paris maximum)
+
+      geocode = paste( geotag()$lat[1], geotag()$lon[1], "60mi", sep = ",")  )
+
+
+
+    twitter_comment <-     twitter_comment %>% unlist()  %>% twitteR::twListToDF()
+
+    twitter_comment <- twitter_comment$text %>% as.tibble() %>% rename("tweet" = value)
+
 
 
    })
-#
-#
-#
-#
-#
+
+#rendering the table of tweets
+
    output$twitterdatatable <- DT::renderDataTable({
-     datatable(twitterdata(),rownames = FALSE,
+     datatable(twitter_comment(),rownames = FALSE,colnames = "Tweets",
                                   autoHideNavigation = TRUE,
                                  class = 'cell-border stripe',
-                                 options = list(pageLength = 10),
-#
-                         caption = tags$em(paste("Twitter data results for city:", input$choosecity)) )
-#
-#
- })
+                                 options = list(pageLength = 10,  scrollX='1000px'),
 
+           caption = tags$em(paste("Twitter data results for city:",
+
+
+                                   paste(
+                                   toupper(substr( input$choosecity, 1, 1)),
+
+                                   substr( input$choosecity, 2, nchar( input$choosecity)) , sep=""   ),
+
+                                         sep = " ")
+                                  )
+
+                            )
+
+
+ })
 
 
 
