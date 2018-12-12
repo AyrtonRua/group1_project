@@ -321,7 +321,7 @@ shinyServer(function(input, output, session) {
 
 
 
-   selectInput( inputId= "place_query_choice",label = "Choose a place",
+   selectInput( inputId= "place_query_choice",label = "Choose a place!",
 
                 choices =     dput(as.character(twitterdata()$name)),
                 selected = as.character(twitterdata()$name)[1],
