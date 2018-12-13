@@ -94,7 +94,7 @@ ui <- shiny::shinyUI(# add class navbar to be used to specify the css styling
           value = "placeinput",
           #provide a reactive selectInput (choices based on the fetched
           #places names)
-          shiny::column(width = 4,    shiny::uiOutput("place_query")),
+          shiny::column(width = 4, shiny::uiOutput("place_query")),
 
           shiny::column(
             width = 12,

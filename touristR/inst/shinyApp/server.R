@@ -4,7 +4,7 @@ shiny::shinyServer(function(input, output, session) {
   twitterdata <- shiny::reactive({
     #obtain the dataframe containing the top places for the requested city
     twitterfetch <-
-      touristR::getTopNAttractions(as.character(input$choosecity), 2)
+      touristR::getTopNAttractions(as.character(input$choosecity), 10)
     #correcting the levels and format of the  fetched data
     twitterfetch <-
       data.frame(lapply(twitterfetch, function(x)
@@ -78,8 +78,10 @@ shiny::shinyServer(function(input, output, session) {
           leaflet::easyButton(
             icon = "fa-crosshairs",
             title = "Locate Me",
-            onClick = htmlwidgets::JS("function(btn, map){
-                                      map.locate({setView: true}); }")
+            onClick =
+              htmlwidgets::JS("function(btn, map) {
+                              map.locate({setView: true});
+    }")
           )
         ) %>%
         #focus the geotag on the selected city as a whole
@@ -107,15 +109,12 @@ shiny::shinyServer(function(input, output, session) {
             #specify custom style for the clustering circles (e.g. color)
             iconCreateFunction =
               htmlwidgets::JS(
-                "
-                function(cluster) {
-                return new L.DivIcon({
-                html: '<div style=\"background-color:
-                rgba(77,77,77,0.5)\"><span>' +
-                cluster.getChildCount() +
-                '</div><span>',
-                className: 'marker-cluster'
-                });
+                "function(cluster) {
+                  return new L.DivIcon({
+                    html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' +
+                    cluster.getChildCount() + '</div><span>',
+                    className: 'marker-cluster'
+                  });
                 }"
               )
           ),
@@ -153,8 +152,10 @@ shiny::shinyServer(function(input, output, session) {
           leaflet::easyButton(
             icon = "fa-crosshairs",
             title = "Locate Me",
-            onClick = htmlwidgets::JS("function(btn, map){
-                                    map.locate({setView: true}); }")
+            onClick = htmlwidgets::JS("function(btn, map) {
+                                         map.locate({setView: true});
+                                        }"
+                                      )
           )
         ) %>%
         #focus the geotag on the selected city as a whole
@@ -182,16 +183,14 @@ shiny::shinyServer(function(input, output, session) {
             #specify custom style for the clustering circles (e.g. color)
             iconCreateFunction =
               htmlwidgets::JS(
-                "
-              function(cluster) {
-              return new L.DivIcon({
-              html: '<div style=\"background-color:
-              rgba(77,77,77,0.5)\"><span>' +
-              cluster.getChildCount() +
-              '</div><span>',
-              className: 'marker-cluster'
-              });
-              }"
+                "function(cluster) {
+                  return new L.DivIcon({
+                    html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' +
+                    cluster.getChildCount() +
+                    '</div><span>',
+                    className: 'marker-cluster'
+                  });
+                 }"
               )
 
           ),
@@ -227,35 +226,24 @@ shiny::shinyServer(function(input, output, session) {
       accessToken =  '76887198-JA3xCVO1vvQMqMDiIobWKKGQxYKSB0CV2lI2PZ7GL',
       accessTokenSecret = 'IvzlVOC8KkIaMR5s5K4u2IXbxKQv7EcUSvy2bnaru8gKz'
     )
+
   #query Twitter for the selected city (in #) to obtain
   #the dataframe containing the requested city tweets
   twitter_comment_city <- shiny::reactive({
-    twitter_comment_city <-   twitteR::searchTwitter(
+    #query Twitter for the selected city and save results
+    #in a dataframe
+    twitter_comment_city <- vosonSML::Collect(
+      credential = authentication,
       #paste the city as e.g. #london
-      searchString = paste("#",  input$choosecity , sep = "") ,
+      searchTerm = paste("#",  input$choosecity , sep = ""),
+      #300 tweets requested for the input city
+      numTweets = 300,
+      writeToFile = FALSE,
       #obtain only tweets in English
-      lang = "en",
-      #100 tweets requested for the input city
-      n = 100,
-      #obtain a mix of popular and new tweets over the requested timeframe
-      resultType = "mixed",
-      #specify the timeframe
-      #since past 2 weeks
-      since =  (
-        lubridate::today(tzone = Sys.timezone()) %>%
-          lubridate::ymd() - 14
-      )     %>% as.character()    ,
-      #until today
-      until = lubridate::today(tzone = Sys.timezone()) %>%
-        lubridate::ymd() %>% as.character()  ,
-      #specifying the geocode to be sure we only obtain e.g. indeed
-      #the results published from Paris for search query Paris (tweet should
-      #be made within a radius of 80 miles from Paris maximum)
-      geocode = paste(geotag()$lat[1], geotag()$lon[1], "80mi", sep = ",")
+      language = "en",
+      verbose = TRUE
     )
-    #put the results (from Twitter) in a dataframe
-    twitter_comment_city <-
-      twitter_comment_city %>% unlist()  %>% twitteR::twListToDF()
+
     #rename column value to tweet (tweet texts obtained)
     twitter_comment_city <-
       twitter_comment_city$text %>% tibble::as.tibble() %>%
@@ -268,7 +256,7 @@ shiny::shinyServer(function(input, output, session) {
     DT::datatable(
       twitter_comment_city(),
       rownames = FALSE,
-      colnames = "Sample of tweets from the last 2 weeks",
+      colnames = "Sample of tweets",
       autoHideNavigation = TRUE,
       #adding aesthetic to highlight a selected cell
       class = 'cell-border stripe',
@@ -315,33 +303,20 @@ shiny::shinyServer(function(input, output, session) {
   })
 
   twitter_comment_place <- shiny::reactive({
-    #query Twitter for tweets regarding the selected place
-    twitter_comment_place <-   twitteR::searchTwitter(
-      #paste the place as hashtag
-      searchString = paste("#",  input_search_twitterplace() , sep = ""),
-      #request english language
-      lang = "en",
-      #number of tweets to obtain
-      n = 100,
-      #obtain a mix of popular and most recent tweets for the
-      #selected timeframe
-      resultType = "mixed",
-      since =  (
-        #select data from the past 2 weeks
-        lubridate::today(tzone = Sys.timezone()) %>%
-          lubridate::ymd() - 14
-      )     %>% as.character()    ,
-      #get tweets up until today
-      until = lubridate::today(tzone = Sys.timezone()) %>%
-        lubridate::ymd() %>% as.character()  ,
-      #specifying the geocode to be sure we only obtain e.g. indeed
-      #the results published from Paris for search query Paris (tweet should
-      #be made within a radius of 80 miles from Paris maximum)
-      geocode = paste(geotag()$lat[1], geotag()$lon[1], "80mi", sep = ",")
+    #query Twitter for the selected city (in #) to obtain
+    #the dataframe containing the requested city tweets
+    twitter_comment_place <-    vosonSML::Collect(
+      credential = authentication,
+      #paste the city as e.g. #london
+      searchTerm = paste("#", input_search_twitterplace() , sep = ""),
+      #300 tweets requested for the input city
+      numTweets = 300,
+      writeToFile = FALSE,
+      #obtain only tweets in English
+      language = "en",
+      verbose = TRUE
     )
-    #collect the results in a dataframe
-    twitter_comment_place <-
-      twitter_comment_place %>% unlist()  %>% twitteR::twListToDF()
+
     #obtain the tweets (texts) and set them as tibbl with column name = tweet
     twitter_comment_place <-
       twitter_comment_place$text %>% tibble::as.tibble() %>%
@@ -353,7 +328,7 @@ shiny::shinyServer(function(input, output, session) {
     DT::datatable(
       twitter_comment_place(),
       rownames = FALSE,
-      colnames = "Sample of tweets from the last 2 weeks",
+      colnames = "Sample of tweets",
       autoHideNavigation = TRUE,
       #adding aesthetic to highlight a selected cell
       class = 'cell-border stripe',
