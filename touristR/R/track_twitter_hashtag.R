@@ -36,6 +36,7 @@
 #'
 #' @examples \dontrun{track_keyword(
 #' keyword = c("eiffel tower", "san francisco", "london"),
+#' type="place",
 #' number = 2,
 #' sincetype = "weeks",
 #' provideN = 100

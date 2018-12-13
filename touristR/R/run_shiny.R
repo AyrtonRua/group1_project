@@ -5,7 +5,12 @@
 #' (e.g. places to visit).
 #'
 #' @param city City of interest
-#' @param place Activity/Place of interest
+#' @param relative_sentiment If checked, select the relative sentiment
+#' (in comparison to the fetched places), otherwise the default behaviour
+#' is to provide an absolute measure of the sentiments (based on a scale of
+#' -5 to 5; values under or equal to 3 labelled as bad sentiment
+#' colored in red, above or equal to 3 as good sentiment colored in green,
+#' and in between as mid colored in green)
 #'
 #' @return An interactive map displaying the information requested by the user,
 #' enhanced by Twitter inputs (e.g. through sentiment analysis of the place).
@@ -24,7 +29,7 @@
 #'
 #' @examples \dontrun{
 #' Choose a city = London,
-#' Choose a place = Monument
+#' Relative sentiment? (unchecked)
 #' }
 #'
 #' @details The function obtains automatically the longitude and latitude of
