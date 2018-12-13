@@ -40,3 +40,7 @@ Imports:
   DT (>= 0.4),
   leaflet (>= 2.0.2),
   htmlwidgets (>= 1.2)
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
