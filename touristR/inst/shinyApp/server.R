@@ -1,24 +1,9 @@
 
-
-
-#add namespace and remove packages to be done!!!!!
-library("shiny")
 library("magrittr")
-library("leaflet")
-
-library("tidyverse")
-
-
-library("shinyWidgets")
-
-
-library("DT")
-
-library("touristR")
 
 
 
-shinyServer(function(input, output, session) {
+shiny::shinyServer(function(input, output, session) {
 
   twitterdata <- shiny::reactive({
 
@@ -40,20 +25,20 @@ shinyServer(function(input, output, session) {
 
 
 
-  twitterfetch <- twitterfetch %>% mutate("sentimentcolorabsolute" =
+  twitterfetch <- twitterfetch %>% dplyr::mutate("sentimentcolorabsolute" =
 
                  ifelse(sentimentAbsolute == 1, "green", ifelse(sentimentAbsolute == 0, "orange","red"))
   )
 
 
-  twitterfetch <- twitterfetch %>% mutate("sentimentcolorrelative" =
+  twitterfetch <- twitterfetch %>% dplyr::mutate("sentimentcolorrelative" =
 
                   ifelse(sentimentRelative == 1, "green", ifelse(sentimentRelative == 0, "orange","red")))
 
 
 
 
-    twitterfetch <-twitterfetch %>% mutate("radius" =
+    twitterfetch <-twitterfetch %>% dplyr::mutate("radius" =
                       ifelse(popularity == 1, 40, ifelse(popularity == 0, 25, 10))
 
 
@@ -93,12 +78,12 @@ shinyServer(function(input, output, session) {
     if(input$checkbox==FALSE) {
 
  m <-    leaflet::leaflet() %>%
-   addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
+   leaflet::addTiles()  %>%  leaflet::addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
 
 
-   addEasyButton(easyButton(
+   leaflet::addEasyButton(leaflet::easyButton(
      icon="fa-crosshairs", title="Locate Me",
-     onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+     onClick=htmlwidgets::JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
 
 
 
@@ -109,9 +94,9 @@ shinyServer(function(input, output, session) {
 
    #add markers in the map
 
-    addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+   leaflet::addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
 
-                      icon=awesomeIcons(
+                      icon=leaflet::awesomeIcons(
                         icon = 'glyphicon glyphicon-map-marker',
                         iconColor = 'black',
                         library = 'glyphicon',
@@ -122,10 +107,10 @@ shinyServer(function(input, output, session) {
  #
                   label=  twitterdata()$name ,
  #                             "Type:", twitterdata$type),
-                  clusterOptions = markerClusterOptions(
+                  clusterOptions = leaflet::markerClusterOptions(
 
                     iconCreateFunction =
-                      JS("
+                      htmlwidgets::JS("
                                           function(cluster) {
                                              return new L.DivIcon({
                                                html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' + cluster.getChildCount() + '</div><span>',
@@ -144,7 +129,7 @@ shinyServer(function(input, output, session) {
                             clusterId = "Places" ) %>%
 
 
-  addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+   leaflet::addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
                    color =  twitterdata()$sentimentcolorabsolute,
  #
  #
@@ -158,12 +143,12 @@ shinyServer(function(input, output, session) {
 } else   if(input$checkbox==TRUE) {
 
       m <-    leaflet::leaflet() %>%
-        addTiles()  %>%  addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
+        leaflet::addTiles()  %>%  leaflet::addMiniMap(zoomLevelFixed = 5, height=100, toggleDisplay=TRUE,minimized=FALSE ) %>%
 
 
-        addEasyButton(easyButton(
+        leaflet::addEasyButton(leaflet::easyButton(
           icon="fa-crosshairs", title="Locate Me",
-          onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+          onClick=htmlwidgets::JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
 
 
 
@@ -174,9 +159,9 @@ shinyServer(function(input, output, session) {
 
 
         #add the marker
-      addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+        leaflet::addAwesomeMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
 
-                        icon=awesomeIcons(
+                        icon=leaflet::awesomeIcons(
                           icon = 'glyphicon glyphicon-map-marker',
                           iconColor = 'black',
                           library = 'glyphicon',
@@ -187,10 +172,10 @@ shinyServer(function(input, output, session) {
                         #                             "Type:", twitterdata$type),
                         label= paste("Name:", twitterdata()$name ) ,
                         #                             "Type:", twitterdata$type),
-                        clusterOptions = markerClusterOptions(
+                        clusterOptions = leaflet::markerClusterOptions(
 
                           iconCreateFunction =
-                            JS("
+                            htmlwidgets::JS("
                                           function(cluster) {
                                              return new L.DivIcon({
                                                html: '<div style=\"background-color:rgba(77,77,77,0.5)\"><span>' + cluster.getChildCount() + '</div><span>',
@@ -209,7 +194,7 @@ shinyServer(function(input, output, session) {
                         clusterId = "Places" ) %>%
 
 
-        addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
+        leaflet::addCircleMarkers(lng = twitterdata()$lng,lat = twitterdata()$lat,
                          color =  twitterdata()$sentimentcolorrelative,
                          #
                          #
@@ -240,7 +225,7 @@ shinyServer(function(input, output, session) {
   ##############
 
 
-  twitter_comment_city <- reactive({
+  twitter_comment_city <- shiny::reactive({
 
 
     twitter_comment_city <-   twitteR::searchTwitter(
@@ -267,7 +252,7 @@ shinyServer(function(input, output, session) {
 
     twitter_comment_city <-     twitter_comment_city %>% unlist()  %>% twitteR::twListToDF()
 
-    twitter_comment_city <- twitter_comment_city$text %>% as.tibble() %>% rename("tweet" = value)
+    twitter_comment_city <- twitter_comment_city$text %>% tibble::as.tibble() %>% dplyr::rename("tweet" = value)
 
 
 
@@ -276,7 +261,7 @@ shinyServer(function(input, output, session) {
 #rendering the table of tweets
 
    output$city_twitterdatatable <- DT::renderDataTable({
-     datatable(twitter_comment_city(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
+     DT::datatable(twitter_comment_city(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
                                   autoHideNavigation = TRUE,
                                  class = 'cell-border stripe',
                                  options = list(pageLength = 10,  scrollX='1000px'),
@@ -300,12 +285,12 @@ shinyServer(function(input, output, session) {
 
 
 
-   output$place_query <- renderUI({
+   output$place_query <- shiny::renderUI({
 
 
 
 
-   selectInput( inputId= "place_query_choice",label = "Choose a place!",
+     shiny::selectInput( inputId= "place_query_choice",label = "Choose a place!",
 
                 choices =     dput(as.character(twitterdata()$name)),
                 selected = as.character(twitterdata()$name)[1],
@@ -320,7 +305,7 @@ shinyServer(function(input, output, session) {
 
 
 
-   input_search_twitterplace <- reactive({
+   input_search_twitterplace <- shiny::reactive({
 
      input_search_twitterplace <- input$place_query_choice
 
@@ -329,7 +314,7 @@ shinyServer(function(input, output, session) {
 
 
 
-   twitter_comment_place <- reactive({
+   twitter_comment_place <- shiny::reactive({
 
 
      twitter_comment_place <-   twitteR::searchTwitter(
@@ -354,7 +339,7 @@ shinyServer(function(input, output, session) {
 
      twitter_comment_place <-     twitter_comment_place %>% unlist()  %>% twitteR::twListToDF()
 
-     twitter_comment_place <- twitter_comment_place$text %>% as.tibble() %>% rename("tweet" = value)
+     twitter_comment_place <- twitter_comment_place$text %>% tibble::as.tibble() %>% dplyr::rename("tweet" = value)
 
 
 
@@ -372,7 +357,7 @@ shinyServer(function(input, output, session) {
    output$place_twitterdatatable <- DT::renderDataTable({
 
 
-     datatable(twitter_comment_place(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
+     DT::datatable(twitter_comment_place(),rownames = FALSE,colnames = "Sample of tweets from the last 2 weeks",
                autoHideNavigation = TRUE,
                class = 'cell-border stripe',
                options = list(pageLength = 10,  scrollX='1000px'),
