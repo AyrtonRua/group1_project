@@ -1,12 +1,13 @@
 #' @title track_twitter_hashtag
 #'
-#' @description Provide a scatterplot displaying hashtag counts overtime based on data obtained
-#' from Twitter.
+#' @description Provide a scatterplot displaying hashtag counts overtime
+#' based on data obtained from Twitter.
 #'
 #' @param keyword A character vector of maximum length 4 (keywords requested)
 #' @param type A character vector of length 1 (type of keyword, can
 #' be either a city/place/monument name in English, to be referred to as
-#' "place", or if needed another type of keyword, please specify by "other").  \cr
+#' "place", or if needed another type of keyword, please specify by "other").
+#' \cr
 #' Note: all keywords should be of the same types (e.g. all places' names).
 #' @param number A positive integer number (timeframe parameter)
 #' @param sincetype A character vector of length 1 (timeframe parameter),
@@ -53,7 +54,8 @@
 #' It should be noted in that sense that if the time frame selected by the user
 #' is less than or equal to 2 weeks, the plot returned groups data by hour,
 #' whereas if the user requests longer timeframes the result will be grouped by
-#' days for better representation of the changes over time (short/long term). \cr \cr
+#' days for better representation of the changes over time
+#' (short/long term). \cr \cr
 #' Lastly, we advise the user to keep the parameter \code{provideN} low
 #' to avoid long delay responses from Twitter API (e.g. setting provideN=100
 #' would be preferable than 1000).
@@ -67,8 +69,8 @@ track_twitter_hashtag <-
     stopifnot({
       is.vector(keyword, mode = "character")
       length(keyword) <= 4
-      is.vector(type, mode="character")
-      length(type)==1
+      is.vector(type, mode = "character")
+      length(type) == 1
       is.integer(number)
       number > 0
       is.character(sincetype)
@@ -102,8 +104,7 @@ track_twitter_hashtag <-
                      long = NA,
                      lat = NA)
 
-    if(type=="place"){
-
+    if (type == "place") {
       for (i in 1:length(keyword)) {
         df[i, 1] <-  keyword[i]
 
@@ -114,8 +115,7 @@ track_twitter_hashtag <-
                                      messaging = FALSE)
 
       }
-    } else  if(type=="other"){
-
+    } else  if (type == "other") {
       for (i in 1:length(keyword)) {
         df[i, 1] <-  keyword[i]
       }
@@ -163,8 +163,7 @@ track_twitter_hashtag <-
     #querying Twitter including the geocode
     #in order to make sure that the tweets are
     #indeed related to the requested place
-    if(type=="place"){
-
+    if (type == "place") {
       for (i in 1:length(keyword)) {
         #run query for that keyword (format is #keyword without space)
         #first we remove any white space to obtain a one word input
@@ -186,13 +185,11 @@ track_twitter_hashtag <-
           #the results published from Paris for search query Paris (e.g.
           #tweet should be made within a radius of 80 miles from Paris maximum)
 
-          geocode = paste(df[i,]$lat, df[i,]$long, "80mi", sep = ",")
+          geocode = paste(df[i, ]$lat, df[i, ]$long, "80mi", sep = ",")
 
         )
       }           #querying twitter without geocode for type =="other"
-    } else  if(type=="other"){
-
-
+    } else  if (type == "other") {
       #query Twitter API
       for (i in 1:length(keyword)) {
         #run query for that keyword (format is #... without space)
@@ -209,7 +206,8 @@ track_twitter_hashtag <-
           resultType = "mixed",
           since =   sinceInput[1]  ,
           until = lubridate::today(tzone = Sys.timezone()) %>%
-            lubridate::ymd() %>% as.character() )
+            lubridate::ymd() %>% as.character()
+        )
 
 
 

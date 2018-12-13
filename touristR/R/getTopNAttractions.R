@@ -1,10 +1,9 @@
-
 #' @title getTopNAttractions
 #'
-#' @description Provide a dataframe containing the data about the top N attractions
-#' for a certain city requested by the user, combining hot spot search from
-#' Tripadvisor and obtaining relevant data from Twitter (e.g. sentiments
-#' about a certain place).
+#' @description Provide a dataframe containing the data about the top N
+#' attractions for a certain city requested by the user,
+#' combining hot spot search from Tripadvisor and obtaining relevant data
+#' from Twitter (e.g. sentiments about a certain place).
 #'
 #' @param city A character vector of maximum length 1 (city requested)
 #' @param n A positive integer number (number of top spots to get for
@@ -132,7 +131,7 @@ getTopNAttractions <- function(city, n) {
     }
     twitter_data$text <- iconv(twitter_data$text, to = "utf-8")
     #removing retweets
-    twitter_data <- (twitter_data[twitter_data$isRetweet == F, ])
+    twitter_data <- (twitter_data[twitter_data$isRetweet == F,])
     twitter_data
   }
 
@@ -146,9 +145,11 @@ getTopNAttractions <- function(city, n) {
       text <- gsub("\\$", "", text)
       tokens <-
         tidytext::unnest_tokens(tibble::data_frame(text = text), word, text)
-      sentiments = dplyr::inner_join(tokens, tidytext::get_sentiments("bing"), by = "word")
+      sentiments = dplyr::inner_join(tokens, tidytext::get_sentiments("bing"),
+                                     by = "word")
       # pull out only sentiment words
-      counts = dplyr::count(sentiments, sentiment)# count the # of positive & negative words
+      counts = dplyr::count(sentiments, sentiment)# count the # of
+      #positive & negative words
       spread = tidyr::spread(counts, sentiment, n, fill = 0)
       # made data wide rather than narrow
       tsentiment = 0

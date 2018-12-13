@@ -1,18 +1,10 @@
-
 ---
 output: github_document
 ---
-
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-
-
-
-
-[![Build status](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://github.com/AyrtonRua/group1_project)
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-
+[![Build status](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)]
+(https://github.com/AyrtonRua/group1_project)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)]
+(https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 ## Overview
 
@@ -28,7 +20,6 @@ help fellow travellers find the best locations to visit worldwide.
 #devtools::install_github("AyrtonRua/group1_project")
 
 ```
-
 
 ## Usage
 
@@ -61,19 +52,16 @@ Nonetheless, please find bellow an example from each function:
 
 ```
 
-
-
 ## Getting help
 
 In case of any request including bugs, please open a new issue on the 
 [GitHub repository of group 1](https://github.com/AyrtonRua/group1_project).
 
-
-
 ## References
 
 Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). 
-*An Introduction to Statistical Programming Methods with R*. Retrieved from https://smac-group.github.io/ds/
+*An Introduction to Statistical Programming Methods with R*. 
+Retrieved from https://smac-group.github.io/ds/
 
 
 

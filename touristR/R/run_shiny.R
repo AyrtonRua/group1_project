@@ -1,4 +1,3 @@
-
 #' @title run_shiny
 #'
 #' @description Provide an interactive Shiny app, representing a tourist
@@ -22,8 +21,8 @@
 #' @author Mohit Mehrotra: \email{mohit.mehrotra@unil.ch}
 #' @author Youness Zarhloul: \email{youness.zarhloul@unil.ch}
 #'
-#' @references Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018).
-#' An Introduction to Statistical Programming Methods with R.
+#' @references Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman,
+#' M. (2018). An Introduction to Statistical Programming Methods with R.
 #' Retrieved from \url{https://smac-group.github.io/ds/}
 #'
 #' @seealso \code{\link{touristR} & \link{track_keyword}}

@@ -42,8 +42,8 @@ relative_sentiment? (unchecked)
 
 }
 \references{
-Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018).
-An Introduction to Statistical Programming Methods with R.
+Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman,
+M. (2018). An Introduction to Statistical Programming Methods with R.
 Retrieved from \url{https://smac-group.github.io/ds/}
 }
 \seealso{

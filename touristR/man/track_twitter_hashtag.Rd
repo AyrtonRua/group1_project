@@ -11,7 +11,8 @@ track_twitter_hashtag(keyword, type, number, sincetype, provideN)
 
 \item{type}{A character vector of length 1 (type of keyword, can
 be either a city/place/monument name in English, to be referred to as
-"place", or if needed another type of keyword, please specify by "other").  \cr
+"place", or if needed another type of keyword, please specify by "other").
+\cr
 Note: all keywords should be of the same types (e.g. all places' names).}
 
 \item{number}{A positive integer number (timeframe parameter)}
@@ -31,8 +32,8 @@ A dataframe containing all the results fetched from Twitter
 (e.g. tweets) based on package \code{\link{twitteR}}
 }
 \description{
-Provide a scatterplot displaying hashtag counts overtime based on data obtained
-from Twitter.
+Provide a scatterplot displaying hashtag counts overtime
+based on data obtained from Twitter.
 }
 \details{
 The function automatically obtains the latitude and longitude of
@@ -45,7 +46,8 @@ over a given time period. \cr
 It should be noted in that sense that if the time frame selected by the user
 is less than or equal to 2 weeks, the plot returned groups data by hour,
 whereas if the user requests longer timeframes the result will be grouped by
-days for better representation of the changes over time (short/long term). \cr \cr
+days for better representation of the changes over time
+(short/long term). \cr \cr
 Lastly, we advise the user to keep the parameter \code{provideN} low
 to avoid long delay responses from Twitter API (e.g. setting provideN=100
 would be preferable than 1000).

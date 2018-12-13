@@ -18,10 +18,10 @@ and Twitter regarding the top attractions in the chosen city
 (e.g. popularity level).
 }
 \description{
-Provide a dataframe containing the data about the top N attractions
-for a certain city requested by the user, combining hot spot search from
-Tripadvisor and obtaining relevant data from Twitter (e.g. sentiments
-about a certain place).
+Provide a dataframe containing the data about the top N
+attractions for a certain city requested by the user,
+combining hot spot search from Tripadvisor and obtaining relevant data
+from Twitter (e.g. sentiments about a certain place).
 }
 \details{
 The function automatically obtains the most relevant places
