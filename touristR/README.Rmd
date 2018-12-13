@@ -66,5 +66,9 @@ In case of any request including bugs, please open a new issue on the
 
 
 
+## References
+
+Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). *An Introduction to Statistical Programming Methods with R*. Retrieved from https://smac-group.github.io/ds/
+
 
 

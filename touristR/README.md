@@ -13,7 +13,7 @@ help fellow travellers find the best locations to visit worldwide.
 
 ``` r
 #Please install the development version from GitHub:
-# install.packages("devtools")
+#install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")
 ```
 
@@ -51,3 +51,9 @@ Nonetheless, please find bellow an example from each function:
 In case of any request including bugs, please open a new issue on the
 [GitHub repository of
 group 1](https://github.com/AyrtonRua/group1_project).
+
+## References
+
+Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). *An
+Introduction to Statistical Programming Methods with R*. Retrieved from
+<https://smac-group.github.io/ds/>
