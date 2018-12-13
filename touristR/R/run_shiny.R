@@ -28,8 +28,8 @@
 #' @seealso \code{\link{touristR} & \link{track_keyword}}
 #'
 #' @examples \dontrun{
-#' Choose a city = London,
-#' Relative sentiment? (unchecked)
+#' city = London,
+#' relative_sentiment? (unchecked)
 #' }
 #'
 #' @details The function obtains automatically the longitude and latitude of

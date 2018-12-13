@@ -8,12 +8,16 @@ output: github_document
 
 
 
-[![Travis Build Status](https://travis-ci.org/tidyverse/ggplot2.svg?branch=master)](https://travis-ci.org/tidyverse/ggplot2)
+
+
+[![Build status](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://github.com/AyrtonRua/group1_project)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 
 ## Overview
 
-touristR is a tourist friendly R package providing useful information to help fellow travellers find the best locations to visit worldwide.
+touristR is a tourist friendly R package providing useful information to 
+help fellow travellers find the best locations to visit worldwide.
 
 ## Installation
 
@@ -37,8 +41,8 @@ Nonetheless, please find bellow an example from each function:
 ```{r, eval = FALSE}
 
 #run_shiny (interactive Shiny app)
-#Choose a city = London
-#relative sentiment? (check or not)
+#city = London
+#relative_sentiment? (unchecked)
 
 #track_twitter_hashtag
 # track_keyword(
@@ -68,7 +72,8 @@ In case of any request including bugs, please open a new issue on the
 
 ## References
 
-Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). *An Introduction to Statistical Programming Methods with R*. Retrieved from https://smac-group.github.io/ds/
+Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). 
+*An Introduction to Statistical Programming Methods with R*. Retrieved from https://smac-group.github.io/ds/
 
 
 

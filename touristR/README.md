@@ -1,8 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis Build
-Status](https://travis-ci.org/tidyverse/ggplot2.svg?branch=master)](https://travis-ci.org/tidyverse/ggplot2)
+[![Build
+status](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://github.com/AyrtonRua/group1_project)
+[![License: GPL
+v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 ## Overview
 
@@ -27,8 +29,8 @@ Nonetheless, please find bellow an example from each function:
 
 ``` r
 #run_shiny (interactive Shiny app)
-#Choose a city = London
-#relative sentiment? (check or not)
+#city = London
+#relative_sentiment? (unchecked)
 
 #track_twitter_hashtag
 # track_keyword(

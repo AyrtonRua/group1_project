@@ -36,8 +36,8 @@ the top-spots to visits in any given city.
 }
 \examples{
 \dontrun{
-Choose a city = London,
-Relative sentiment? (unchecked)
+city = London,
+relative_sentiment? (unchecked)
 }
 
 }
