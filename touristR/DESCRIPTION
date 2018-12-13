@@ -2,7 +2,7 @@ Package: touristR
 Type: Package
 Title: Package touristR
 Version: 0.1.0
-Date: 2018-12-01
+Date: 2018-12-14
 Authors@R: c(
     person("Ayrton", "Rua", email = "ayrton.gomesmartinsrua@unil.ch",
     role = c("aut","cre")),
@@ -16,7 +16,7 @@ Authors@R: c(
     role = "aut")
     )
 Maintainer: The package maintainer is Ayrton Rua <ayrton.gomesmartinsrua@unil.ch>
-Description: The provide an interactive Shiny map allowing providing the user (traveller) with useful and easy to access information about cities of interest, using Twitter and Tripadvisor data. It allows also to query Twitter to obtain information about the popularity of different keywords (e.g. London) over time.
+Description: The package provides an interactive Shiny map allowing the user (traveller) to obtain relevant and useful, easy to access information about cities/monuments of interest, using Twitter and Tripadvisor data. It allows also to query Twitter to obtain information about the popularity of different keywords (e.g. London) over time.
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -36,4 +36,7 @@ Imports:
   plyr (>= 1.8.4),
   vosonSML (>= 0.23.4),
   tidytext (>= 0.1.9),
-  tibble (>= 1.4.2)
+  tibble (>= 1.4.2),
+  DT (>= 0.4),
+  leaflet (>= 2.0.2),
+  htmlwidgets (>= 1.2)
