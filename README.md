@@ -20,7 +20,7 @@ help fellow travellers find the best locations to visit worldwide.
 
 ``` r
 #Please install the development version from GitHub:
-#install.packages("devtools")
+#install.packages("devtools", build_vignettes = TRUE)
 #devtools::install_github("AyrtonRua/group1_project")
 ```
 
