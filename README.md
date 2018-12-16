@@ -38,9 +38,9 @@ Nonetheless, please find bellow an example from each function:
 #relative_sentiment? (unchecked)
 
 #track_twitter_hashtag
-# track_keyword(
+# track_twitter_hashtag(
 # keyword = c("eiffel tower", "san francisco", "london"),
-# type="place"
+# type="place",
 # number = 2,
 # sincetype = "weeks",
 # provideN = 100
