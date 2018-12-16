@@ -62,6 +62,46 @@ Nonetheless, please find bellow an example from each function:
 
 ```
 
+## Screencast!
+
+```{r, echo=FALSE}
+
+# Video Introduction. Using the package ("vembedr")
+library("vembedr")
+library("htmltools")
+
+```
+
+
+```{css, echo=FALSE}
+
+/*Comment: Setting various parameters for video display*/
+
+.vembedr {
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none
+}
+
+```
+
+
+```{r, echo=FALSE}
+
+# Video Presentation of the group
+embed_youtube("DDAim7oR0Sw", allowfullscreen = TRUE,height = "500px",width = "895px") %>%
+  div(class = "vembedr") %>%
+  div(align = "center")
+
+```
+
+
+
 ## Getting help :interrobang:
 
 In case of any request including bugs, please open a new issue on the 
