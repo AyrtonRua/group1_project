@@ -1,26 +1,30 @@
+touristR
+================
 
 [![Build
-status](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://github.com/AyrtonRua/group1_project)
+status](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/AyrtonRua/group1_project)
 [![GitHub
-version](https://badge.fury.io/gh/Naereen%2FStrapDown.js.svg)](https://github.com/AyrtonRua/group1_project)
+version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/AyrtonRua/group1_project)
 [![License: GPL
 v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-## Overview 🗺👍
+<u> Authors:</u> Ayrton Rua, Maurizio Griffo, Ali Karray, Mohit
+Mehrotra, Youness Zarhloul (Group 1 Myama)
+
+## Overview :earth\_africa:
 
 touristR is a tourist friendly R package providing useful information to
 help fellow travellers find the best locations to visit worldwide.
 
-## Installation 🚀
+## Installation :rocket:
 
 ``` r
-
 #Please install the development version from GitHub:
 #install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")
 ```
 
-## Usage 🖥
+## Usage :computer:
 
 Please refer to the documentation of each function run\_shiny,
 track\_twitter\_hashtag and getTopNAttractions, for further information
@@ -29,7 +33,6 @@ on how to use each function.
 Nonetheless, please find bellow an example from each function:
 
 ``` r
-
 #run_shiny (interactive Shiny app)
 #city = London
 #relative_sentiment? (unchecked)
@@ -50,14 +53,18 @@ Nonetheless, please find bellow an example from each function:
 # )
 ```
 
-## Getting help
+## Getting help :interrobang:
 
-In ⁉️ case of any request including bugs, please open a new issue on the
+In case of any request including bugs, please open a new issue on the
 [GitHub repository of
 group 1](https://github.com/AyrtonRua/group1_project).
 
-## References 📚
+## References :books:
 
 Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). *An
 Introduction to Statistical Programming Methods with R*. Retrieved from
 <https://smac-group.github.io/ds/>
+
+<br><br>
+
+**touristR** (2018), Group 1 Myama. Released under GPL-2 License.
