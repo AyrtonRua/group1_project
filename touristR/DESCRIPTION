@@ -1,7 +1,7 @@
 Package: touristR
 Type: Package
 Title: Package touristR (providing tourist friendly interactive map)
-Version: 0.1.0
+Version: 1.0.0
 Date: 2018-12-14
 Authors@R: c(
     person("Ayrton", "Rua", email = "ayrton.gomesmartinsrua@unil.ch",
@@ -23,6 +23,7 @@ BugReports: https://github.com/AyrtonRua/group1_project/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
+Depends: R (>= 3.5.1)
 Imports:
   ggplot2 (>= 3.0.0),
   tibble (>= 1.4.2),
