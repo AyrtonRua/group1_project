@@ -4,13 +4,14 @@
 #' friendly map, that the user can query to obtain useful travel information
 #' (e.g. places to visit).
 #'
-#' @param city City of interest
-#' @param relative_sentiment If checked, select the relative sentiment
-#' (in comparison to the fetched places), otherwise the default behaviour
-#' is to provide an absolute measure of the sentiments (based on a scale of
-#' -5 to 5; values under or equal to 3 labelled as bad sentiment
-#' colored in red, above or equal to 3 as good sentiment colored in green,
-#' and in between as mid colored in green)
+#' @param city City of interest (a text input which should be without any
+#' special punctuation mark, and written in English)
+#' @param relative_sentiment A toggle switch. If checked, select the relative
+#' sentiment (in comparison to the fetched places), otherwise the default
+#' behaviour is to provide an absolute measure of the sentiments
+#' (based on a scale of -5 to 5; values under or equal to 3 labelled as bad
+#' sentiment colored in red, above or equal to 3 as good sentiment
+#' colored in green, and in between as mid colored in green)
 #'
 #' @return An interactive map displaying the information requested by the user,
 #' enhanced by Twitter inputs (e.g. through sentiment analysis of the place).

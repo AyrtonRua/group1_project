@@ -3,19 +3,19 @@
 #' @description Provide a scatterplot displaying hashtag counts overtime
 #' based on data obtained from Twitter.
 #'
-#' @param keyword A character vector of maximum length 4 (keywords requested)
-#' @param type A character vector of length 1 (type of keyword, can
+#' @param keyword A character \code{vector} of maximum length 4
+#' (keywords requested)
+#' @param type A character \code{vector} of length 1 (type of keyword, can
 #' be either a city/place/monument name in English, to be referred to as
-#' "place", or if needed another type of keyword, please specify by "other").
+#' "place", or if another type of keyword, please specify by "other").
 #' \cr
 #' Note: all keywords should be of the same types (e.g. all places' names).
-#' @param number A positive integer number (timeframe parameter)
-#' @param sincetype A character vector of length 1 (timeframe parameter),
+#' @param number A positive \code{integer} number (timeframe parameter)
+#' @param sincetype A character \code{vector} of length 1 (timeframe parameter),
 #' which can be (uniquely) on of the following:
 #' either "days", "weeks", "months" or "years"
-#'
-#' @param provideN A positive integer number
-#' (Number ot tweets to fetch per keywords)
+#' @param provideN A positive \code{integer} number
+#' (Number ot tweets to fetch for each keyword)
 #'
 #' @return A timeseries scatterplot with the hashtag count on the y axis,
 #' and on the x axis the timeframe.

@@ -5,8 +5,9 @@
 #' combining hot spot search from Tripadvisor and obtaining relevant data
 #' from Twitter (e.g. sentiments about a certain place).
 #'
-#' @param city A character vector of maximum length 1 (city requested)
-#' @param n A positive integer number (number of top spots to get for
+#' @param city A character \code{vector} of length 1 (city requested; the input
+#' should not contain any special punctuation marks, and written in English)
+#' @param n A positive \code{integer} number (number of top spots to get for
 #' the requested city)
 #'
 #' @return A dataframe containing all results fetched from Tripadvisor
