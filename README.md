@@ -61,7 +61,6 @@ Nonetheless, please find bellow an example from each function:
 #getTopNAttractions
 # getTopNAttractions(city = "london",
 #                    n = 10)
-#
 ```
 
 ## Screencast :tv:
