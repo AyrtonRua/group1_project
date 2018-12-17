@@ -71,6 +71,10 @@ Nonetheless, please find bellow an example from each function:
 
 <!--/html_preserve-->
 
+<iframe width="480" height="360" src="http://www.youtube.com/embed/WO82PoAczTc" frameborder="0">
+
+</iframe>
+
 ## Getting help :interrobang:
 
 In case of any request including bugs, please open a new issue on the
