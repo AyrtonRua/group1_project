@@ -70,7 +70,7 @@ Nonetheless, please find bellow an example from each function:
 <!-- Video Presentation of the group -->
 
 [![Screencast package
-touristR](http://img.youtube.com/vi/p6urWb3U07M/maxresdefault.jpg)](http://www.youtube.com/watch?v=p6urWb3U07M "Screencast package touristR")
+touristR](http://img.youtube.com/vi/p6urWb3U07M/maxresdefault.jpg)](http://www.youtube.com/watch_popup?v=p6urWb3U07M "Screencast package touristR")
 
 ## Getting help :interrobang:
 
