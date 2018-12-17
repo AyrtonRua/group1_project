@@ -2,7 +2,7 @@ touristR
 ================
 
 [![Build
-status](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/AyrtonRua/group1_project)
+status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/AyrtonRua/group1_project)
 [![GitHub
 version](https://img.shields.io/badge/Package%20version-1.0.0-orange.svg)](https://github.com/AyrtonRua/group1_project)
 [![License: GPL
@@ -38,8 +38,8 @@ file.
 
 ## Usage :computer:
 
-Please refer to the documentation of each function `run_shiny`,
-`track_twitter_hashtag` and `getTopNAttractions`, for further
+Please refer to the documentation of each function `run_shiny()`,
+`track_twitter_hashtag()` and `getTopNAttractions()`, for further
 information on how to use each function.
 
 Nonetheless, please find bellow an example from each function:
@@ -51,18 +51,17 @@ Nonetheless, please find bellow an example from each function:
 
 #track_twitter_hashtag
 # track_twitter_hashtag(
-# keyword = c("eiffel tower", "san francisco", "london"),
-# type="place",
-# number = 2,
-# sincetype = "weeks",
-# provideN = 100
-# )
+#   keyword = c("eiffel tower", "san francisco", "london"),
+#   type = "place",
+#   number = 2,
+#   sincetype = "weeks",
+#   provideN = 100
+#   )
 
 #getTopNAttractions
-# getTopNAttractions(
-# city = "london",
-# n = 10
-# )
+# getTopNAttractions(city = "london",
+#                    n = 10)
+#
 ```
 
 ## Screencast :tv:
