@@ -105,6 +105,8 @@ embed_youtube("DDAim7oR0Sw", allowfullscreen = TRUE,height = "500px",width = "89
 
 
 
+[![Alt text](https://img.youtube.com/vi/VID/0.jpg)](https://www.youtube.com/watch?v=VID)
+
 
 
 ## Getting help :interrobang:
