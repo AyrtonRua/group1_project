@@ -38,9 +38,9 @@ file.
 
 ## Usage :computer:
 
-Please refer to the documentation of each function run\_shiny,
-track\_twitter\_hashtag and getTopNAttractions, for further information
-on how to use each function.
+Please refer to the documentation of each function `run_shiny`,
+`track_twitter_hashtag` and `getTopNAttractions`, for further
+information on how to use each function.
 
 Nonetheless, please find bellow an example from each function:
 
