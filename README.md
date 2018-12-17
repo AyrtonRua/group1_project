@@ -71,12 +71,8 @@ Nonetheless, please find bellow an example from each function:
 
 <!--/html_preserve-->
 
-<iframe width="480" height="360" src="http://www.youtube.com/embed/WO82PoAczTc" frameborder="0">
-
-</iframe>
-
-[![Alt
-text](https://img.youtube.com/vi/VID/0.jpg)](https://www.youtube.com/watch?v=VID)
+[![Watch the
+video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/vt5fpE0bzSY)
 
 ## Getting help :interrobang:
 
