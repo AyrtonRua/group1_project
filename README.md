@@ -96,13 +96,6 @@ This project is licensed under the GPL-2 License - see the
 [LICENSE](https://github.com/AyrtonRua/group1_project/blob/master/LICENSE)
 file for details.
 
-## Possible extensions :ballot\_box\_with\_check:
-
-Confirming/Replicating the findings simply by adding other social media
-platforms (e.g. Instagram API), which would require mainly paying for
-the access to the API, as the current package is very flexible and
-requires only a minimal code change to query those platforms as well.
-
 <br><br>
 
 -----
