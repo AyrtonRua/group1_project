@@ -8,20 +8,24 @@ output: github_document
 [![GitHub version](https://img.shields.io/badge/Package%20version-1.0.0-orange.svg)](https://github.com/AyrtonRua/group1_project)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-
-
-
-
-<u> Authors:</u>   Ayrton Rua, Maurizio Griffo, Ali Karray, Mohit Mehrotra, Youness Zarhloul (Group 1 Myama)
-
-
-
 ## Overview :earth_africa:
 
 touristR is a tourist friendly R package providing useful information to 
 help fellow travellers find the best locations to visit worldwide.
 
-## Installation :rocket:
+
+## Getting Started :runner:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites :warning:
+
+In case of package loading failure, please make sure that you have the 
+required versions and packages needed, the full list of requirement is 
+available in the [DESCRIPTION](https://github.com/AyrtonRua/group1_project/blob/master/DESCRIPTION) file.  
+
+*Note*: This package requires `R (>= 3.1.0)`.
+
+### Installation :rocket:
 
 ```{r, eval = FALSE}
 
@@ -62,44 +66,18 @@ Nonetheless, please find bellow an example from each function:
 
 ```
 
-## Screencast!
+## Screencast :tv:
 
-```{r, echo=FALSE}
+<!-- Video Presentation of the group
 
-# Video Introduction. Using the package ("vembedr")
-library("vembedr")
-library("htmltools")
-
-```
+https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
 
 
-```{css, echo=FALSE}
+https://stackoverflow.com/questions/11804820/embed-a-youtube-video
 
-/*Comment: Setting various parameters for video display*/
+http://embedyoutube.org/
 
-.vembedr {
-  display: inline-block;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.vembedr iframe {
-  display: block;
-  border: none
-}
-
-```
-
-
-```{r, echo=FALSE}
-
-# Video Presentation of the group
-embed_youtube("DDAim7oR0Sw", allowfullscreen = TRUE,height = "500px",width = "895px") %>%
-  div(class = "vembedr") %>%
-  div(align = "center")
-
-```
-
+-->
 [![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/vt5fpE0bzSY)
 
 
@@ -110,14 +88,30 @@ embed_youtube("DDAim7oR0Sw", allowfullscreen = TRUE,height = "500px",width = "89
 In case of any request including bugs, please open a new issue on the 
 [GitHub repository of group 1](https://github.com/AyrtonRua/group1_project).
 
+
+## Authors (Group 1 Myama) :santa:
+
+
+* Ayrton Rua
+* Maurizio Griffo
+* Ali Karray
+* Mohit Mehrotra
+* Youness Zarhloul 
+
+
 ## References :books:
 
 Orso, S., Molinari, R., Lee, J., Guerrier, S., & Beckman, M. (2018). 
 *An Introduction to Statistical Programming Methods with R*. 
 Retrieved from https://smac-group.github.io/ds/
 
-<br><br>
 
+## License :scroll:
+
+This project is licensed under the GPL-2 License - see the [LICENSE](https://github.com/AyrtonRua/group1_project/blob/master/LICENSE) file for details.
+
+
+<br><br>
 **touristR** (2018), Group 1 Myama. Released under GPL-2 License.
 
 
