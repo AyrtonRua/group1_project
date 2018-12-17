@@ -67,19 +67,10 @@ Nonetheless, please find bellow an example from each function:
 
 ## Screencast :tv:
 
-<!-- Video Presentation of the group
+<!-- Video Presentation of the group -->
 
-https://stackoverflow.com/questions/4279611/how-to-embed-a-video-into-github-readme-md
-
-
-https://stackoverflow.com/questions/11804820/embed-a-youtube-video
-
-http://embedyoutube.org/
-
--->
-
-[![Watch the
-video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/vt5fpE0bzSY)
+[![Screencast package
+touristR](http://img.youtube.com/vi/p6urWb3U07M/maxresdefault.jpg)](http://www.youtube.com/watch?v=p6urWb3U07M "Screencast package touristR")
 
 ## Getting help :interrobang:
 
