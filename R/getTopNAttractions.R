@@ -27,9 +27,10 @@
 #'
 #' @seealso \code{\link{touristR}} & \code{\link{run_shiny}}
 #'
-#' @examples \dontrun{getTopNAttractions(
-#' city = "london",
-#' n = 10
+#' @examples \dontrun{
+#' getTopNAttractions(
+#'  city = "london",
+#'  n = 10
 #' )
 #' }
 #'
