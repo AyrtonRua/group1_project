@@ -23,7 +23,7 @@ In case of package loading failure, please make sure that you have the
 required versions and packages needed, the full list of requirement is 
 available in the [DESCRIPTION](https://github.com/AyrtonRua/group1_project/blob/master/DESCRIPTION) file.  
 
-*Note*: This package requires `R (>= 3.1.0)`.
+*Note*: This package requires `R (>= 3.4.0)`.
 
 ### Installation :rocket:
 

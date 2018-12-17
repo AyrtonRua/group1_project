@@ -26,7 +26,7 @@ available in the
 [DESCRIPTION](https://github.com/AyrtonRua/group1_project/blob/master/DESCRIPTION)
 file.
 
-*Note*: This package requires `R (>= 3.1.0)`.
+*Note*: This package requires `R (>= 3.4.0)`.
 
 ### Installation :rocket:
 
