@@ -30,7 +30,7 @@ available in the [DESCRIPTION](https://github.com/AyrtonRua/group1_project/blob/
 ```{r, eval = FALSE}
 
 #Please install the development version from GitHub:
-#install.packages("devtools", build_vignettes = TRUE)
+#install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")
 
 ```

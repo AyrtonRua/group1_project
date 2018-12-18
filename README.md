@@ -32,7 +32,7 @@ file.
 
 ``` r
 #Please install the development version from GitHub:
-#install.packages("devtools", build_vignettes = TRUE)
+#install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")
 ```
 
