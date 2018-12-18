@@ -32,8 +32,20 @@ file.
 
 ``` r
 #Please install the development version from GitHub:
+
+#install.packages("remotes")
+#forces building the package with the vignette
+# remotes::install_github(
+#   "AyrtonRua/group1_project",
+#   build = TRUE,
+#   build_opts = c("--no-resave-data", "--no-manual"),
+#   force = T
+# )
+
+
+#alternatively you can use (standard installation approach)
 #install.packages("devtools")
-#devtools::install_github("AyrtonRua/group1_project")  
+#devtools::install_github("AyrtonRua/group1_project")
 ```
 
 ## Usage :computer:
