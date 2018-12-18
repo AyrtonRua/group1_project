@@ -33,7 +33,7 @@ file.
 ``` r
 #Please install the development version from GitHub:
 #install.packages("devtools")
-#devtools::install_github("AyrtonRua/group1_project")
+#devtools::install_github("AyrtonRua/group1_project", build_opts = c("--no-resave-data", "--no-manual"))
 ```
 
 ## Usage :computer:
