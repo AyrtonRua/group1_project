@@ -4,7 +4,7 @@ shiny::shinyServer(function(input, output, session) {
   twitterdata <- shiny::reactive({
     #obtain the dataframe containing the top places for the requested city
     twitterfetch <-
-      touristR::getTopNAttractions(as.character(input$choosecity), 50)
+      touristR::getTopNAttractions(as.character(input$choosecity), 15)
     #correcting the levels and format of the  fetched data
     twitterfetch <-
       data.frame(lapply(twitterfetch, function(x)
