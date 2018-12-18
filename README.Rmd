@@ -40,7 +40,6 @@ available in the [DESCRIPTION](https://github.com/AyrtonRua/group1_project/blob/
 #   force = T
 # )
 
-
 #alternatively you can use (standard installation approach)
 #install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")

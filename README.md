@@ -42,7 +42,6 @@ file.
 #   force = T
 # )
 
-
 #alternatively you can use (standard installation approach)
 #install.packages("devtools")
 #devtools::install_github("AyrtonRua/group1_project")
